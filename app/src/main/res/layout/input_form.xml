@@ -3,6 +3,17 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="wrap_content">
+
+    <View android:layout_width="wrap_content" android:layout_height="100dp"/>
+
+    <ImageView
+            android:id="@+id/img_head"
+            android:layout_gravity="center"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/qipao"
+    />
+
     <EditText
             android:id="@+id/edt_userName"
             android:layout_margin="10dp"
@@ -11,7 +22,7 @@
             android:hint="@string/user_name"
             android:maxLines="1"
             android:inputType="number"
-            android:maxLength="18" />
+            android:maxLength="18"/>
 
     <EditText
             android:id="@+id/edt_password"
@@ -21,6 +32,27 @@
             android:hint="@string/password"
             android:maxLines="1"
             android:inputType="textPassword"
-            android:maxLength="18" />
+            android:maxLength="18"/>
+
+    <EditText
+            android:id="@+id/edt_password_confirm"
+            android:visibility="gone"
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/password_confirm"
+            android:maxLines="1"
+            android:inputType="textPassword"
+            android:maxLength="18"/>
+
+    <Button
+            android:clickable="false"
+            android:id="@+id/btn_login_regist"
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/gray"
+            android:textSize="24sp"
+            android:textColor="@color/colorWhite"/>
 
 </LinearLayout>

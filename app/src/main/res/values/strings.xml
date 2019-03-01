@@ -1,12 +1,16 @@
 <resources>
+    <string name="no"/>
+    <string name="main_ui">主界面</string>
+    <string name="login">登录</string>
     <string name="app_name">IMS</string>
+    <string name="password">密码</string>
+    <string name="register">注册</string>
     <string name="author_name">杨辰</string>
     <string name="user_name">用户名</string>
-    <string name="password">密码</string>
     <string name="author_id">20158308074</string>
-    <string name="forgot_password">忘记密码?</string>
-    <string name="login">登录</string>
-    <string name="register">注册</string>
     <string name="register_new">注册新用户</string>
+    <string name="password_confirm">确认密码</string>
+    <string name="forgot_password">忘记密码?</string>
+    <string name="e_mail">18860957075@163.com</string>
     <string name="is_developing">功能正在开发中，请耐心等待...</string>
 </resources>
