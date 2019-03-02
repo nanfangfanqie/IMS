@@ -17,7 +17,7 @@ import ims.yang.com.ims.util.ResourceUtil;
 /**
  * 注册活动
  */
-public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
+public class RegisterActivity extends BaseActivity implements View.OnClickListener {
 
     Button btnLogin;
     ImageView imgHead;

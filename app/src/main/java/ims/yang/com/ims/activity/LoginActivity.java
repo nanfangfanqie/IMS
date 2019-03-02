@@ -77,6 +77,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             case R.id.btn_login_regist:
                 //启动主活动
                 MainActivity.actionStart(this, userName);
+                finish();
                 break;
             case R.id.txt_forgot:
                 MyToast.INSTANCE.toastShort(this, ResourceUtil.INSTANCE.getString(this, R.string.is_developing));
