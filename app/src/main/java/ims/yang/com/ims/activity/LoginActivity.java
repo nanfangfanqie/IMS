@@ -34,7 +34,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.login_activity);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.login);
         setSupportActionBar(toolbar);
@@ -57,9 +57,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
         btnLogin = findViewById(R.id.btn_login_regist);
         btnLogin.setOnClickListener(this);
+        //长按设置配置
+        btnLogin.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                startActivity(new Intent(LoginActivity.this,ConfigActivity.class));
+                return true;
+            }
+        });
         btnLogin.setText(R.string.login);
-
-
     }
 
     @Override

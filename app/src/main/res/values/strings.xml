@@ -13,4 +13,14 @@
     <string name="forgot_password">忘记密码?</string>
     <string name="e_mail">18860957075@163.com</string>
     <string name="is_developing">功能正在开发中，请耐心等待...</string>
+    <string name="ip">IP</string>
+    <string name="port">PORT</string>
+    <string name="database">DATABASE</string>
+    <string name="db_password">PASSWORD</string>
+    <string name="db_username">USERNAME</string>
+    <string name="submit">SUBMIT</string>
+    <string name="message">消息</string>
+    <string name="contacts">联系人</string>
+    <string name="moments">动态</string>
+
 </resources>
