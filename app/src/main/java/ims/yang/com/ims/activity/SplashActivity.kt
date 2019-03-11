@@ -12,7 +12,7 @@ class SplashActivity : BaseActivity() {
     lateinit var timer:CountDownTimer
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_splash)
+        setContentView(R.layout.splash_activity)
         init()
     }
 
@@ -36,7 +36,9 @@ class SplashActivity : BaseActivity() {
     }
 
     companion object {
+        //倒计时时间
         private const val MILLIS_IN_FUTURE = 500L
+        //倒计时间隔
         private const val COUNTDOWN_INTERVAL = 500L
     }
 
