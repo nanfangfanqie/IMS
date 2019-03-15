@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+    <ImageView
+            android:id="@+id/img_user_header"
+            android:layout_width="50dp"
+            android:layout_height="0dp"
+            android:src="@drawable/qipao"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="5dp"/>
+
+    <TextView android:layout_margin="5dp"
+              android:id="@+id/txt_username"
+              android:layout_height="wrap_content"
+              android:layout_width="wrap_content"
+              android:textSize="18sp"
+              android:textColor="@color/colorBlack"
+              android:textAlignment="textStart"
+              android:maxLines="1"
+              android:text="很短的昵称"
+              app:layout_constraintLeft_toRightOf="@+id/img_user_header"
+              app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+            android:id="@+id/txt_message"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textSize="12sp"
+            android:maxLines="1"
+            android:text="很长的消息"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="36dp"
+            app:layout_constraintLeft_toRightOf="@+id/img_user_header"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+
+    <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_gravity="bottom"
+            android:background="@color/gainsboro"
+            android:layout_marginTop="59.5dp"
+            android:layout_marginStart="10dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+    />
+
+
+</android.support.constraint.ConstraintLayout>

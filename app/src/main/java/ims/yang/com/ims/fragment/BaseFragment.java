@@ -26,7 +26,7 @@ public class BaseFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_base, container,false);
+        View view = inflater.inflate(R.layout.base_fragment, container,false);
         TextView tvInfo = (TextView) view.findViewById(R.id.textView);
         tvInfo.setText(getArguments().getString("info"));
         tvInfo.setOnClickListener(new View.OnClickListener() {
@@ -36,5 +36,7 @@ public class BaseFragment extends Fragment {
             }
         });
         return view;
+
     }
+
 }

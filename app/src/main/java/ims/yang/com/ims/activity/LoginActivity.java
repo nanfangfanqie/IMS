@@ -82,7 +82,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 break;
             case R.id.btn_login_regist:
                 //启动主活动
-                MainActivity.actionStart(this, userName);
+                MainActivity.Companion.actionStart(this, userName);
                 finish();
                 break;
             case R.id.txt_forgot:
