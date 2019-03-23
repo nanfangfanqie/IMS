@@ -1,6 +1,7 @@
 package ims.yang.com.ims.adapter;
 
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import ims.yang.com.ims.R;
+import ims.yang.com.ims.activity.PersonalInfoActivity;
 import ims.yang.com.ims.entity.Friend;
 
 import java.util.List;
@@ -18,10 +20,10 @@ import java.util.List;
  */
 public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder> {
 
-    private List<Friend> userList;
+    private List<Friend> friendList;
 
     public FriendAdapter(List<Friend> friends) {
-        this.userList = friends;
+        this.friendList = friends;
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -37,28 +39,35 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
     }
 
     public void setFriendList(List<Friend> userList) {
-        this.userList = userList;
+        this.friendList = userList;
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
+    public ViewHolder onCreateViewHolder(@NonNull final ViewGroup parent, int i) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.friend_item, parent, false);
-        FriendAdapter.ViewHolder viewHolder = new FriendAdapter.ViewHolder(view);
+        final ViewHolder viewHolder = new ViewHolder(view);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Friend friend = friendList.get(viewHolder.getAdapterPosition());
+                //进入个人资料界面
+                PersonalInfoActivity.actionStart(parent.getContext(),friend.getFriendId(),friend.getNickName());
+//                Snackbar.make(v,"You Clicked"+ friend.getNickName(),Snackbar.LENGTH_SHORT).show();
+            }
+        });
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Friend user = userList.get(position);
+        Friend user = friendList.get(position);
         holder.imageView.setImageResource(R.drawable.qipao);
         holder.textView.setText(user.getNickName());
     }
 
     @Override
     public int getItemCount() {
-        return userList.size();
+        return friendList.size();
     }
-
-
 }

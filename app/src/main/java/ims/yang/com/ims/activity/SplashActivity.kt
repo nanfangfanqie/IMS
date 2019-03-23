@@ -1,8 +1,13 @@
 package ims.yang.com.ims.activity
 
+import android.Manifest
 import android.os.CountDownTimer
 import android.os.Bundle
+import android.os.Handler
 import ims.yang.com.ims.R
+import com.tbruyelle.rxpermissions2.RxPermissions
+import io.reactivex.functions.Consumer
+
 
 /**启动屏
  * @author yangchen
@@ -23,16 +28,34 @@ class SplashActivity : BaseActivity() {
     }
 
     private fun init() {
-        //TODO 初始化操作
-         timer = object : CountDownTimer(Companion.MILLIS_IN_FUTURE, Companion.COUNTDOWN_INTERVAL) {
+        //TODO
+        Handler().postDelayed({requestPermissions()},500)
+         /*timer = object : CountDownTimer(MILLIS_IN_FUTURE, COUNTDOWN_INTERVAL) {
             override fun onTick(millisUntilFinished: Long) {}
             override fun onFinish() {
                 //启动登录页面
-                LoginActivity.actionStart(this@SplashActivity);
+                LoginActivity.actionStart(this@SplashActivity)
                 finish()
             }
         }
-        timer.start()
+        timer.start()*/
+    }
+    private fun requestPermissions(){
+        val rxPermission = RxPermissions(this)
+        rxPermission.request(
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,//存储权限
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.CAMERA,
+            Manifest.permission.RECORD_AUDIO
+        ).subscribe(Consumer<Boolean> {
+            if (it!!){
+                LoginActivity.actionStart(this@SplashActivity)
+                finish()
+            }else{
+                finish()
+            }
+        })
+
     }
 
     companion object {

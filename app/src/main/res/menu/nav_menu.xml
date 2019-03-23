@@ -26,9 +26,9 @@
         />
 
         <item
-                android:id="@+id/nav_settings3"
-                android:icon="@drawable/settings"
-                android:title="nav5"
+                android:id="@+id/exit"
+                android:icon="@drawable/exit"
+                android:title="@string/exit"
         />
     </group>
 

@@ -39,12 +39,12 @@ public class FriendListFragment extends Fragment {
      * 刷新页面
      */
     public void refresh() {
-        List<Friend> userList = new ArrayList<>();
+        List<Friend> friendList = new ArrayList<>();
         for (int i = 0; i < 30; i++) {
             Friend user = new Friend("我的好友昵称" + i);
-            userList.add(user);
+            friendList.add(user);
         }
-        friendAdapter.setFriendList(userList);
+        friendAdapter.setFriendList(friendList);
         recyclerView.setAdapter(friendAdapter);
     }
 

@@ -20,7 +20,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     Button btnLogin;
     ImageView imgHead;
-
     EditText edtPassword;
     EditText edtPasswordConfirm;
 

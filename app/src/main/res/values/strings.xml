@@ -22,5 +22,6 @@
     <string name="message">消息</string>
     <string name="contacts">联系人</string>
     <string name="moments">动态</string>
-
+    <string name="exit">退出应用</string>
+    <string name="sendMessage">发消息</string>
 </resources>

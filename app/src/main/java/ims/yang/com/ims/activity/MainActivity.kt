@@ -1,27 +1,27 @@
 package ims.yang.com.ims.activity
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.support.design.widget.BottomNavigationView
 import android.support.design.widget.NavigationView
 import android.support.v4.view.ViewPager
 import android.support.v4.widget.DrawerLayout
-import android.support.v7.app.ActionBar
 import android.os.Bundle
-import android.support.v7.widget.RecyclerView
+import android.support.design.widget.Snackbar
 import android.support.v7.widget.Toolbar
 import android.view.*
 import ims.yang.com.ims.R
-import ims.yang.com.ims.adapter.MessageAdapter
 import ims.yang.com.ims.adapter.ViewPagerAdapter
-import ims.yang.com.ims.entity.Message
 import ims.yang.com.ims.fragment.BaseFragment
 import ims.yang.com.ims.fragment.FriendListFragment
 import ims.yang.com.ims.fragment.MessageListFragment
+import ims.yang.com.ims.util.ActivityController
 import ims.yang.com.ims.util.MyToast
 import ims.yang.com.ims.util.ResourceUtil
+import kotlinx.android.synthetic.main.message_item.*
 
-import java.util.ArrayList
 
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -138,6 +138,22 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
     override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
         //TODO
+
+        when(menuItem.itemId){
+            R.id.exit -> {
+                var alertDialog:AlertDialog.Builder = AlertDialog.Builder(this)
+                alertDialog.setTitle("退出")
+                alertDialog.setIcon(R.drawable.exit_black)
+                alertDialog.setMessage("确定退出应用吗？")
+                alertDialog.setPositiveButton("确定") { _: DialogInterface, _: Int ->
+                    ActivityController.finishAll();
+                }
+                alertDialog.setNegativeButton("取消"){ _: DialogInterface, _: Int ->
+                    Snackbar.make(view,"您取消了操作",Snackbar.LENGTH_LONG).show()
+                }
+                alertDialog.show()
+            }
+        }
         drawerLayout!!.closeDrawers()
         return false
     }
@@ -145,6 +161,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     companion object {
 
         fun actionStart(context: Context, vararg dataArr: String) {
+
             val intent = Intent(context, MainActivity::class.java)
             if (dataArr.isNotEmpty()) {
                 for (i in dataArr.indices) {
