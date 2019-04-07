@@ -5,6 +5,6 @@ import android.util.Log;
 public   class LogUtil {
 
     public static void d(String msg) {
-        Log.d("com.yang.ims", msg);
+        Log.d("chatui", msg);
      }
 }

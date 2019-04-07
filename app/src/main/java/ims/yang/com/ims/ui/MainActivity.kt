@@ -1,4 +1,4 @@
-package ims.yang.com.ims.activity
+package ims.yang.com.ims.ui
 
 import android.app.AlertDialog
 import android.content.Context
@@ -13,6 +13,7 @@ import android.support.design.widget.Snackbar
 import android.support.v7.widget.Toolbar
 import android.view.*
 import ims.yang.com.ims.R
+import ims.yang.com.ims.activity.BaseActivity
 import ims.yang.com.ims.adapter.ViewPagerAdapter
 import ims.yang.com.ims.fragment.BaseFragment
 import ims.yang.com.ims.fragment.FriendListFragment
@@ -21,7 +22,6 @@ import ims.yang.com.ims.util.ActivityController
 import ims.yang.com.ims.util.MyToast
 import ims.yang.com.ims.util.ResourceUtil
 import kotlinx.android.synthetic.main.message_item.*
-
 
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 

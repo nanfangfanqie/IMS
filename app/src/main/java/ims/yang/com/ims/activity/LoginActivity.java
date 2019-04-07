@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import ims.yang.com.ims.R;
+import ims.yang.com.ims.ui.MainActivity;
 import ims.yang.com.ims.util.MyToast;
 import ims.yang.com.ims.util.ResourceUtil;
 
