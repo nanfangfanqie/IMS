@@ -4,92 +4,78 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
-import android.support.design.widget.BottomNavigationView
-import android.support.design.widget.NavigationView
-import android.support.v4.view.ViewPager
-import android.support.v4.widget.DrawerLayout
 import android.os.Bundle
+import android.support.design.widget.NavigationView
 import android.support.design.widget.Snackbar
-import android.support.v7.widget.Toolbar
-import android.view.*
+import android.support.v4.view.ViewPager
+import android.view.Gravity
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
 import ims.yang.com.ims.R
-import ims.yang.com.ims.activity.BaseActivity
 import ims.yang.com.ims.adapter.ViewPagerAdapter
-import ims.yang.com.ims.fragment.BaseFragment
-import ims.yang.com.ims.fragment.FriendListFragment
-import ims.yang.com.ims.fragment.MessageListFragment
+import ims.yang.com.ims.entity.User
 import ims.yang.com.ims.util.ActivityController
 import ims.yang.com.ims.util.MyToast
 import ims.yang.com.ims.util.ResourceUtil
+import kotlinx.android.synthetic.main.main_activity.*
 import kotlinx.android.synthetic.main.message_item.*
+import kotlinx.android.synthetic.main.toolbar.*
+import kotlinx.android.synthetic.main.viewpager.*
 
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
-
-    private var drawerLayout: DrawerLayout? = null
-    private var viewPager: ViewPager? = null
-    private var menuItem: MenuItem? = null
-    private var bottomNavigationView: BottomNavigationView? = null
+    private lateinit var user:User
     private var messageListFragment: MessageListFragment? = null
-    private var friendListFragment:FriendListFragment? = null
+    private var friendListFragment: FriendListFragment? = null
+    private var menuItem: MenuItem? = null
 
     private fun setupViewPager(viewPager: ViewPager) {
         //添加消息碎片
         val adapter = ViewPagerAdapter(supportFragmentManager)
         messageListFragment = MessageListFragment()
         friendListFragment = FriendListFragment()
-        adapter.addFragment(messageListFragment)
-        adapter.addFragment(friendListFragment)
-        //        adapter.addFragment(BaseFragment.newInstance("消息"));
-//        adapter.addFragment(BaseFragment.newInstance("联系人"))
+        adapter.addFragment(messageListFragment!!)
+        adapter.addFragment(friendListFragment!!)
         adapter.addFragment(BaseFragment.newInstance("动态"))
         viewPager.adapter = adapter
     }
 
     private fun init() {
-        val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
+        var intent = intent
+        user = intent.getSerializableExtra("param1") as User;
+        Toast.makeText(this,user.nickName,Toast.LENGTH_LONG).show()
         toolbar.setTitle(R.string.main_ui)
         setSupportActionBar(toolbar)
-        drawerLayout = findViewById(R.id.drawer_layout)
         val actionBar = supportActionBar
-
-        /**
-         * 替换导航栏
-         */
+        //替换导航栏
         if (null != actionBar) {
             actionBar.setDisplayHomeAsUpEnabled(true)
             actionBar.setHomeAsUpIndicator(R.drawable.ic_menu)
         }
-
-        val navView = findViewById<NavigationView>(R.id.nav_view)
-        navView.setCheckedItem(R.id.nav_backup)
+        navView.setCheckedItem(R.id.navBackup)
         navView.setNavigationItemSelectedListener(this)
-        //初始化viewpager
-        viewPager = findViewById(R.id.viewpager)
-        /**
-         * 初始化底部导航栏
-         */
-        bottomNavigationView = findViewById(R.id.bottom_navigation)
-        bottomNavigationView!!.setOnNavigationItemSelectedListener { menuItem ->
+        //底部导航栏
+        navBottom!!.setOnNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.message -> {
-                    viewPager!!.currentItem = 0
+                    viewpager!!.currentItem = 0
                     toolbar.title = "消息"
                 }
                 R.id.contacts -> {
-                    viewPager!!.currentItem = 1
+                    viewpager!!.currentItem = 1
                     toolbar.title = "联系人"
                 }
                 R.id.moments -> {
-                    viewPager!!.currentItem = 2
+                    viewpager!!.currentItem = 2
                     toolbar.title = "动态"
                 }
                 else -> {
                 }
-            }//                        messageListFragment
+            }
             false
         }
 
-        viewPager!!.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+        viewpager!!.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
                 when (position) {
                     0 -> toolbar.title = "消息"
@@ -99,20 +85,21 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                     }
                 }
             }
+
             override fun onPageSelected(position: Int) {
                 if (menuItem != null) {
                     menuItem!!.isChecked = false
                 } else {
-                    bottomNavigationView!!.menu.getItem(0).isChecked = false
+                    navBottom!!.menu.getItem(0).isChecked = false
                 }
-                menuItem = bottomNavigationView!!.menu.getItem(position)
+                menuItem = navBottom!!.menu.getItem(position)
                 menuItem!!.isChecked = true
             }
 
             override fun onPageScrollStateChanged(state: Int) {}
 
         })
-        setupViewPager(viewPager!!)
+        setupViewPager(viewpager!!)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -160,8 +147,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
     companion object {
 
-        fun actionStart(context: Context, vararg dataArr: String) {
-
+        fun actionStart(context: Context, vararg dataArr: User) {
             val intent = Intent(context, MainActivity::class.java)
             if (dataArr.isNotEmpty()) {
                 for (i in dataArr.indices) {

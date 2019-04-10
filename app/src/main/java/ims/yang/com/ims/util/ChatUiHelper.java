@@ -42,9 +42,6 @@ public class ChatUiHelper {
     private View mAddButton;//加号按钮
     private Button mAudioButton;//录音按钮
     private ImageView mAudioIv;//录音图片
-
-
-
     private EditText mEditText;
     private InputMethodManager mInputManager;
     private SharedPreferences mSp;

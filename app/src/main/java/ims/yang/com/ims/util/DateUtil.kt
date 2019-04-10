@@ -15,7 +15,6 @@ import java.util.Date
 object DateUtil {
 
     private const val TAG = "DateUtil"
-
     /**
      * 时间转字符串
      * @param format 格式

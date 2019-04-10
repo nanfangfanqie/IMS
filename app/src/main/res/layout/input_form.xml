@@ -7,7 +7,7 @@
     <View android:layout_width="wrap_content" android:layout_height="100dp"/>
 
     <ImageView
-            android:id="@+id/img_head"
+            android:id="@+id/imgHeader"
             android:layout_gravity="center"
             android:layout_width="100dp"
             android:layout_height="100dp"
@@ -15,7 +15,7 @@
     />
 
     <EditText
-            android:id="@+id/edt_userName"
+            android:id="@+id/edtUserName"
             android:layout_margin="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -25,7 +25,7 @@
             android:maxLength="18"/>
 
     <EditText
-            android:id="@+id/edt_password"
+            android:id="@+id/edtPassword"
             android:layout_margin="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
             android:maxLength="18"/>
 
     <EditText
-            android:id="@+id/edt_password_confirm"
+            android:id="@+id/edtPasswordConfirm"
             android:visibility="gone"
             android:layout_margin="10dp"
             android:layout_width="match_parent"
@@ -47,7 +47,7 @@
 
     <Button
             android:clickable="false"
-            android:id="@+id/btn_login_regist"
+            android:id="@+id/btnSubmit"
             android:layout_margin="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

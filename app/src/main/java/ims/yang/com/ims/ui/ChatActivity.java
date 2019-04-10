@@ -1,4 +1,4 @@
-package ims.yang.com.ims.activity;
+package ims.yang.com.ims.ui;
 
 import android.content.Context;
 import android.content.Intent;

@@ -7,7 +7,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.util.MultiTypeDelegate;
 import ims.yang.com.ims.R;
-import ims.yang.com.ims.activity.ChatActivity;
+import ims.yang.com.ims.ui.ChatActivity;
 import ims.yang.com.ims.bean.*;
 import ims.yang.com.ims.util.GlideUtils;
 

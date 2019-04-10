@@ -1,15 +1,12 @@
-package ims.yang.com.ims.activity
+package ims.yang.com.ims.ui
 
 import android.os.Bundle
-import android.support.v4.view.ViewCompat
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import android.view.KeyEvent
-import android.widget.Toast
 import ims.yang.com.ims.util.ActivityController
 import ims.yang.com.ims.util.MyToast
 
-/**
+/**BaseActivity 用于管理所有的活动
  * @author yangchen
  * on 2019/2/28 23:56
  */

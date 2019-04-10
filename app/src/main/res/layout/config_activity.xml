@@ -9,7 +9,7 @@
 
     <EditText
             android:layout_margin="10dp"
-            android:id="@+id/edt_ip"
+            android:id="@+id/edtIP"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/ip"
@@ -17,14 +17,14 @@
 
     <EditText
             android:layout_margin="10dp"
-            android:id="@+id/edt_port"
+            android:id="@+id/edtPort"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/port"
     />
 
     <Button
-            android:id="@+id/btn_submit"
+            android:id="@+id/btnSubmit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/submit"

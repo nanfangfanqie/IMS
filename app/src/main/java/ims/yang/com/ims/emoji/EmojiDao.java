@@ -75,7 +75,7 @@ public class EmojiDao {
         if (!file.exists()) {
             try {
                 file.createNewFile();
-                inputStream = ImsApplication.mApplication.getClass().getClassLoader().getResourceAsStream("assets/" + SqliteFileName);
+                inputStream = ImsApplication.Companion.getMApplication().getClass().getClassLoader().getResourceAsStream("assets/" + SqliteFileName);
                 outputStream = new FileOutputStream(file);
                 byte[] buffer = new byte[1024];
                 int len ;

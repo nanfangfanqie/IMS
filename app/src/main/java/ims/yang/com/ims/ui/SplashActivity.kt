@@ -1,4 +1,4 @@
-package ims.yang.com.ims.activity
+package ims.yang.com.ims.ui
 
 import android.Manifest
 import android.os.CountDownTimer
@@ -28,25 +28,17 @@ class SplashActivity : BaseActivity() {
     }
 
     private fun init() {
-        //TODO
         Handler().postDelayed({requestPermissions()},500)
-         /*timer = object : CountDownTimer(MILLIS_IN_FUTURE, COUNTDOWN_INTERVAL) {
-            override fun onTick(millisUntilFinished: Long) {}
-            override fun onFinish() {
-                //启动登录页面
-                LoginActivity.actionStart(this@SplashActivity)
-                finish()
-            }
-        }
-        timer.start()*/
     }
     private fun requestPermissions(){
+        //获取权限
         val rxPermission = RxPermissions(this)
         rxPermission.request(
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,//存储权限
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.CAMERA,
-            Manifest.permission.RECORD_AUDIO
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,//存储权限
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.CAMERA,
+                Manifest.permission.RECORD_AUDIO,
+                Manifest.permission.INTERNET
         ).subscribe(Consumer<Boolean> {
             if (it!!){
                 LoginActivity.actionStart(this@SplashActivity)
@@ -55,7 +47,6 @@ class SplashActivity : BaseActivity() {
                 finish()
             }
         })
-
     }
 
     companion object {

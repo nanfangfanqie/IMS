@@ -23,7 +23,6 @@ public class GlideUtils {
 	final RequestOptions options = new RequestOptions()
 				.placeholder(R.mipmap.default_img_failed)// 正在加载中的图片
 				.error(R.mipmap.default_img_failed); // 加载失败的图片
-
 		Glide.with(mContext)
 				.load(imgUrl) // 图片地址
 				.apply(options)
@@ -35,7 +34,6 @@ public class GlideUtils {
 						imageLP.width = imageSize.getWidth();
 						imageLP.height = imageSize.getHeight();
 						imageView.setLayoutParams(imageLP);
-
 						Glide.with(mContext)
 								.load(resource)
 								.apply(options) // 参数
