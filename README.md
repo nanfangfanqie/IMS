@@ -1,6 +1,6 @@
 # IMS
 ## Instant Messaging System
-### 此处为客户端
-### 服务端
+### Here is Client
+### This is [Server](https://github.com/nanfangfanqie/imss)
 ### Developing...
 ### 🐢（此时一直乌龟路过）
