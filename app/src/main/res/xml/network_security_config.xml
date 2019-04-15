@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--TO FIX ANDROID PIE CAN'T REQUEST HTTP-->
 <network-security-config>
     <base-config cleartextTrafficPermitted="true" />
 </network-security-config>

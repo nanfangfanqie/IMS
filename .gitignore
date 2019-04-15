@@ -9,3 +9,4 @@
 /build
 /captures
 .externalNativeBuild
+/app/src/main/java/ims/yang/com/ims/util/RobotConfig.java

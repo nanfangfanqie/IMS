@@ -25,7 +25,7 @@
     />
 
     <TextView
-            android:id="@+id/mail"
+            android:id="@+id/nav_phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@id/nav_userName"
