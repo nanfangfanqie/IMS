@@ -1,20 +1,19 @@
 package ims.chat.model;
 
 import android.graphics.Bitmap;
+import cn.jpush.im.android.api.model.UserInfo;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import cn.jpush.im.android.api.model.UserInfo;
 
 /**
  * Created by ${chenyn} on 2017/3/14.
  */
 
 public class InfoModel {
-    public  UserInfo friendInfo;
-    public  Bitmap bitmap;
+    public UserInfo friendInfo;
+    public Bitmap bitmap;
 
     private static InfoModel mInfoModel = new InfoModel();
 

@@ -7,7 +7,7 @@ import ims.chat.R
 import kotlinx.android.synthetic.main.personal_info_activity.*
 import kotlinx.android.synthetic.main.toolbar.*
 
-class PersonalInfoActivity : BaseActivity() {
+class PersonalInfoActivity : IBaseActivity() {
     /**
      * 初始化
      */
@@ -22,7 +22,7 @@ class PersonalInfoActivity : BaseActivity() {
 //                this@PersonalInfoActivity,
 //                friendId,
 //                nickName
-//            )
+////            )
         }
     }
 

@@ -1,6 +1,6 @@
 package ims.chat.utils
 
-/**
+/**网络配置
  * @author yangchen
  * on 2019/4/8 17:26
  */

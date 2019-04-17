@@ -53,7 +53,7 @@ class NewsActivity : AppCompatActivity() {
     }
 
     fun init(){
-        toolbar.title = "偷来的新闻！！"
+        toolbar.title = "IMNews"
         var linearLayoutManager = LinearLayoutManager(this)
         rvNewsList.layoutManager = linearLayoutManager
         //查询新闻

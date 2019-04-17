@@ -6,7 +6,7 @@
 
     <View android:layout_width="wrap_content" android:layout_height="100dp"/>
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imgHeader"
             android:layout_gravity="center"
             android:layout_width="100dp"
@@ -21,7 +21,6 @@
             android:layout_height="wrap_content"
             android:hint="@string/user_name"
             android:maxLines="1"
-            android:inputType="number"
             android:maxLength="18"/>
 
     <EditText
@@ -34,17 +33,6 @@
             android:inputType="textPassword"
             android:maxLength="18"/>
 
-    <EditText
-            android:id="@+id/edtPasswordConfirm"
-            android:visibility="gone"
-            android:layout_margin="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/password_confirm"
-            android:maxLines="1"
-            android:inputType="textPassword"
-            android:maxLength="18"/>
-
     <Button
             android:clickable="false"
             android:id="@+id/btnSubmit"
@@ -52,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/gray"
+            android:text="登录"
             android:textSize="24sp"
             android:textColor="@color/colorWhite"/>
-
 </LinearLayout>

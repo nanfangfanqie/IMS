@@ -1,9 +1,9 @@
 package ims.chat.model;
 
-import java.util.List;
-
 import cn.jpush.im.android.api.model.GroupInfo;
 import cn.jpush.im.android.api.model.UserInfo;
+
+import java.util.List;
 
 
 public class SearchResult {

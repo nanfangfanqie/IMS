@@ -15,19 +15,18 @@ import android.view.View
 import android.widget.Toast
 import com.yang.crypt.MessageDigetUtil
 import ims.chat.R
+import ims.chat.application.ImsApplication
 import ims.chat.constant.API
+import ims.chat.ui.controller.LoginController
 import ims.chat.entity.User
 import ims.chat.listener.Listener
 import ims.chat.task.UserTask
-import ims.chat.utils.HttpConfig
-import ims.chat.utils.MyToast
-import ims.chat.utils.ResourceUtil
-import ims.chat.utils.UrlUtil
+import ims.chat.utils.*
 import java.net.SocketTimeoutException
 import ims.chat.vo.MessageResult
 import kotlinx.android.synthetic.main.input_form.*
-
 import kotlinx.android.synthetic.main.login_activity.*
+import kotlinx.android.synthetic.main.toolbar.*
 
 /**
  * 登录活动
@@ -36,9 +35,7 @@ import kotlinx.android.synthetic.main.login_activity.*
  */
 @Suppress("DEPRECATION")
 class LoginActivity : BaseActivity(), View.OnClickListener, TextWatcher {
-
     internal lateinit var progressDialog: ProgressDialog
-
     private val loginListener = object : Listener<User> {
         override fun onSuccess(user: User) {
             //跳转
@@ -67,8 +64,6 @@ class LoginActivity : BaseActivity(), View.OnClickListener, TextWatcher {
             }
         }
     }
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_activity)
@@ -84,36 +79,38 @@ class LoginActivity : BaseActivity(), View.OnClickListener, TextWatcher {
     private fun init() {
         edtUserName.addTextChangedListener(this)
         edtPassword.addTextChangedListener(this)
-        txtRegister.setOnClickListener(this)
-        txtForgot.setOnClickListener(this)
-        btnSubmit.setOnClickListener(this)
+        txtToggle.setOnClickListener(this)
+        btnSubmit.setOnClickListener(LoginController(this))
         //长按配置ip和端口
         btnSubmit.setOnLongClickListener {
             startActivity(Intent(this@LoginActivity, ConfigActivity::class.java))
             true
         }
         btnSubmit.setText(R.string.login)
+        val userName = SharePreferenceManager.getCachedUsername()
+        val userAvatar = SharePreferenceManager.getCachedAvatarPath()
+        edtUserName.setText(userName)
+        edtPassword.setText(userAvatar)
     }
-
     override fun onClick(v: View) {
-        val userName = edtUserName.text.toString()
-        val password = edtPassword.text.toString()
         when (v) {
-            txtRegister -> if ("" != userName.trim { it <= ' ' } && "" != password.trim { it <= ' ' }) {
-                RegisterActivity.actionStart(this, userName, password)
-            } else {
-                RegisterActivity.actionStart(this)
+            txtToggle ->{
+                if(ImsApplication.registerOrLogin % 2== 1){
+                    //注册
+                    toolbar.title = "注册"
+                    btnSubmit.text = "注册"
+                    txtLable.text = "已有帐号？"
+                    txtToggle.text = "现在登录"
+                }else{
+                    //登录
+                    toolbar.title = "登录"
+                    btnSubmit.text = "登录"
+                    txtLable.text = "还没有帐号？"
+                    txtToggle.text = "现在注册"
+                }
+
+                ImsApplication.registerOrLogin ++
             }
-            btnSubmit -> {
-//          TODO 关闭没有参数的Login      login()
-                val user = User()
-                user.nickName = "番茄"
-                user.telphone = "18860957075"
-                MainActivity.actionStart(this, user)
-            }
-            txtForgot ->
-                //修改密码界面
-                MyToast.toastShort(this, ResourceUtil.getString(this, R.string.is_developing))
             else -> {
             }
         }

@@ -8,25 +8,22 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import ims.chat.R;
-import ims.chat.entity.Friend;
+import ims.chat.database.FriendEntry;
 import ims.chat.ui.activity.PersonalInfoActivity;
-
 import java.util.List;
-
 /**
  * @author yangchen
  * on 3/15/2019 3:01 PM
  */
 public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder> {
 
-    private List<Friend> friendList;
+    private List<FriendEntry> friendList;
 
-    public FriendAdapter(List<Friend> friends) {
+    public FriendAdapter(List<FriendEntry> friends) {
         this.friendList = friends;
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-
         ImageView imageView;
         TextView textView;
         public ViewHolder(@NonNull View view) {
@@ -34,10 +31,9 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
             imageView = view.findViewById(R.id.img_friend_header);
             textView = view.findViewById(R.id.txt_username);
         }
-
     }
 
-    public void setFriendList(List<Friend> userList) {
+    public void setFriendList(List<FriendEntry> userList) {
         this.friendList = userList;
     }
 
@@ -49,9 +45,9 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Friend friend = friendList.get(viewHolder.getAdapterPosition());
+                FriendEntry user = friendList.get(viewHolder.getAdapterPosition());
                 //进入个人资料界面
-                PersonalInfoActivity.Companion.actionStart(parent.getContext(),friend.getFriendId(),friend.getNickName());
+                PersonalInfoActivity.Companion.actionStart(parent.getContext(),user.nickName,user.username);
             }
         });
         return viewHolder;
@@ -59,9 +55,9 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Friend user = friendList.get(position);
+        FriendEntry user = friendList.get(position);
         holder.imageView.setImageResource(R.drawable.qipao);
-        holder.textView.setText(user.getNickName());
+        holder.textView.setText(user.nickName);
     }
 
     @Override

@@ -43,8 +43,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
             @Override
             public void onClick(View v) {
                 Message message = messageList.get(viewHolder.getAdapterPosition());
-
-//                Snackbar.make(v,"Message:"+ message.content,Snackbar.LENGTH_SHORT).show();
             }
         });
         return viewHolder;

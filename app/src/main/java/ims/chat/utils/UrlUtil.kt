@@ -36,6 +36,4 @@ object UrlUtil {
         }
         return sb.deleteCharAt(sb.length - 1).toString()
     }
-
-
 }

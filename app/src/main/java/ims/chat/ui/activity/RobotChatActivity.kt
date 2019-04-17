@@ -3,6 +3,7 @@ package ims.chat.ui.activity
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import cn.jpush.im.android.api.JMessageClient
 import ims.chat.application.ImsApplication
 import ims.chat.R
 import ims.chat.adapter.RobotMsgAdapter
@@ -53,9 +54,12 @@ class RobotChatActivity : AppCompatActivity() {
     }
 
     private fun init(){
-        val user:User = intent.getSerializableExtra("user") as User
+        var nickName =JMessageClient.getMyInfo().nickname
+        if (nickName.isEmpty()){
+            nickName = UUID.randomUUID().toString();
+        }
         var linearLayoutManager = LinearLayoutManager(this)
-        toolbar.title = "人工智障"
+        toolbar.title = "IMRobot"
         setSupportActionBar(toolbar)
         rvRobotChat.layoutManager = linearLayoutManager
         msgAdapter = RobotMsgAdapter(msgList)
@@ -68,7 +72,7 @@ class RobotChatActivity : AppCompatActivity() {
                 edtMessage.setText("")
             }
             //启动机器人任务
-            RobotTask(robotListener).execute("${API.TURNING.url}key=$key&info=$content&userid=${user.nickName}")
+            RobotTask(robotListener).execute("${API.TURNING.url}key=$key&info=$content&userid=${nickName}")
         }
     }
 

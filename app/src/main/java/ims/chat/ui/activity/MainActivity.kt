@@ -11,11 +11,13 @@ import android.support.v4.view.ViewPager
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
+import cn.jpush.im.android.api.JMessageClient
 import ims.chat.R
+import ims.chat.database.UserEntry
 import ims.chat.entity.User
 import ims.chat.task.ViewPagerAdapter
 import ims.chat.ui.fragment.BaseFragment
-import ims.chat.ui.fragment.FriendListFragment
+import ims.chat.ui.fragment.ContactsFragment
 import ims.chat.ui.fragment.MessageListFragment
 import ims.chat.utils.ActivityController
 import ims.chat.utils.MyToast
@@ -27,16 +29,24 @@ import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.viewpager.*
 
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
-    private lateinit var user: User
+    private lateinit var userEntry: UserEntry
     private var messageListFragment: MessageListFragment? = null
-    private var friendListFragment: FriendListFragment? = null
+    private var friendListFragment: ContactsFragment? = null
     private var menuItem: MenuItem? = null
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.main_activity)
+        init()
+    }
 
     private fun setupViewPager(viewPager: ViewPager) {
         //添加消息碎片
         val adapter = ViewPagerAdapter(supportFragmentManager)
         messageListFragment = MessageListFragment()
-        friendListFragment = FriendListFragment()
+        friendListFragment = ContactsFragment()
+
         adapter.addFragment(messageListFragment!!)
         adapter.addFragment(friendListFragment!!)
         adapter.addFragment(BaseFragment.newInstance("动态"))
@@ -44,9 +54,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     }
 
     private fun init() {
-        var intent = intent
-        user = intent.getSerializableExtra("param1") as User;
-//        Toast.makeText(this,user.nickName,Toast.LENGTH_LONG).show()
         toolbar.setTitle(R.string.main_ui)
         setSupportActionBar(toolbar)
         val actionBar = supportActionBar
@@ -85,7 +92,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                     1 -> toolbar.title = "联系人"
                     2 -> toolbar.title = "动态"
                     else -> {
-
                     }
                 }
             }
@@ -106,12 +112,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         setupViewPager(viewpager!!)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.main_activity)
-        init()
-    }
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.toolbar, menu)
         return true
@@ -121,8 +121,10 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         when (item.itemId) {
             android.R.id.home ->{
                 drawerLayout!!.openDrawer(Gravity.START)
-                nav_userName.text = user.nickName
-                nav_phone.text= user.telphone
+                val user = JMessageClient.getMyInfo()
+                nav_userName.text = user.nickname
+                nav_phone.text= user.userName
+
             }
             R.id.settings -> MyToast.toastShort(this, ResourceUtil.getString(this, R.string.is_developing))
             else -> {
@@ -136,7 +138,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             R.id.navRobot -> {
                 navView.setCheckedItem(R.id.navRobot)
                 val intent = Intent(this, RobotChatActivity::class.java)
-                intent.putExtra("user",user);
                 startActivity(intent)
             }
             R.id.news ->{
@@ -147,7 +148,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             }
             R.id.exit -> {
                 navView.setCheckedItem(R.id.exit)
-                var alertDialog:AlertDialog.Builder = AlertDialog.Builder(this)
+                val alertDialog:AlertDialog.Builder = AlertDialog.Builder(this)
                 alertDialog.setTitle("退出")
                 alertDialog.setIcon(R.drawable.exit_black)
                 alertDialog.setMessage("确定退出应用吗？")

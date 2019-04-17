@@ -10,7 +10,7 @@ public class SharePreferenceManager {
         sp = context.getSharedPreferences(name, Context.MODE_PRIVATE);
     }
 
-    private static final String KEY_CACHED_USERNAME = "jchat_cached_username";
+    private static final String KEY_CACHED_USERNAME = "ims_cached_username";
 
     public static void setCachedUsername(String username) {
         if (null != sp) {
@@ -25,7 +25,7 @@ public class SharePreferenceManager {
         return null;
     }
 
-    private static final String KEY_CACHED_PSW = "jchat_cached_psw";
+    private static final String KEY_CACHED_PSW = "ims_cached_psw";
 
     public static void setCachedPsw(String psw) {
         if (null != sp) {
@@ -100,7 +100,7 @@ public class SharePreferenceManager {
         return null;
     }
 
-    private static final String KEY_CACHED_AVATAR_PATH = "jchat_cached_avatar_path";
+    private static final String KEY_CACHED_AVATAR_PATH = "ims_cached_avatar_path";
 
     public static void setCachedAvatarPath(String path) {
         if (null != sp) {
@@ -146,7 +146,7 @@ public class SharePreferenceManager {
     }
 
 
-    private static final String KEY_REGISTER_AVATAR_PATH = "jchat_register_avatar_path";
+    private static final String KEY_REGISTER_AVATAR_PATH = "ims_register_avatar_path";
 
     public static void setRegisterAvatarPath(String path) {
         if (null != sp) {

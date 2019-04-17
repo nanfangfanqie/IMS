@@ -8,6 +8,7 @@ import android.os.CountDownTimer
 import android.os.Bundle
 import android.os.Handler
 import android.preference.PreferenceManager
+import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.ImageView
 import com.bumptech.glide.Glide
@@ -26,7 +27,7 @@ import java.io.IOException
  * @author yangchen
  * on 2019/2/28 23:15
  */
-class SplashActivity : BaseActivity() {
+class SplashActivity : AppCompatActivity() {
     lateinit var timer:CountDownTimer
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,7 +90,8 @@ class SplashActivity : BaseActivity() {
                 Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.CAMERA,
                 Manifest.permission.RECORD_AUDIO,
-                Manifest.permission.INTERNET
+                Manifest.permission.INTERNET,
+                        Manifest.permission.CAMERA
         ).subscribe(Consumer<Boolean> {
             if (it!!){
                 LoginActivity.actionStart(this@SplashActivity)

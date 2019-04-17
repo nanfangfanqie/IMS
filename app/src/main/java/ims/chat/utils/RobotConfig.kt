@@ -1,6 +1,6 @@
 package ims.chat.utils
 
-/**
+/**机器人密钥
  * @author yangchen
  * on 2019/4/11 22:59
  */

@@ -2,33 +2,35 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools"
           package="ims.chat">
-    <permission
-            android:name="ims.chat.permission.JPUSH_MESSAGE"
-            android:protectionLevel="signature"/>
-    <uses-permission android:name="ims.chat.permission.JPUSH_MESSAGE" />
-    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
-    <!-- Optional. Required for location feature -->
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.GET_TASKS" />
+    <permission
+            android:name="${applicationId}.permission.JPUSH_MESSAGE"
+            android:protectionLevel="signature"/>
+
+    <uses-permission android:name="ims.chat.permission.JPUSH_MESSAGE"/>
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission
+            android:name="android.permission.ACCESS_WIFI_STATE"/> <!-- Optional. Required for location feature -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.GET_TASKS"/>
     <uses-permission
             android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
             tools:ignore="ProtectedPermissions"/>
+
     <application
             android:name=".application.ImsApplication"
             android:allowBackup="true"
@@ -39,108 +41,105 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
 
-        <!-- Required SDK 核心功能-->
+        <meta-data
+                android:name="AA_DB_NAME"
+                android:value="jchat.db"/>
+        <meta-data
+                android:name="AA_MODELS"
+                android:value="ims.chat.database.UserEntry, ims.chat.database.FriendEntry,
+             ims.chat.database.FriendRecommendEntry, ims.chat.database.ConversationEntry"/>
+        <meta-data
+                android:name="AA_DB_VERSION"
+                android:value="4"/>
+        <!-- Required SDK 核心功能 -->
         <!-- 可配置android:process参数将PushService放在其他进程中 -->
         <service
                 android:name="cn.jpush.android.service.PushService"
                 android:enabled="true"
                 android:exported="false">
             <intent-filter>
-                <action android:name="cn.jpush.android.intent.REGISTER" />
-                <action android:name="cn.jpush.android.intent.REPORT" />
-                <action android:name="cn.jpush.android.intent.PushService" />
-                <action android:name="cn.jpush.android.intent.PUSH_TIME" />
+                <action android:name="cn.jpush.android.intent.REGISTER"/>
+                <action android:name="cn.jpush.android.intent.REPORT"/>
+                <action android:name="cn.jpush.android.intent.PushService"/>
+                <action android:name="cn.jpush.android.intent.PUSH_TIME"/>
             </intent-filter>
-        </service>
-
-        <!-- Required SDK核心功能-->
+        </service> <!-- Required SDK核心功能 -->
         <receiver
                 android:name="cn.jpush.android.service.PushReceiver"
                 android:enabled="true"
                 android:exported="false">
             <intent-filter android:priority="1000">
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />
-                <category android:name="ims.chat" />
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY"/>
+                <category android:name="ims.chat"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.USER_PRESENT" />
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.intent.action.USER_PRESENT"/>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
             </intent-filter>
             <!-- Optional -->
             <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_ADDED" />
-                <action android:name="android.intent.action.PACKAGE_REMOVED" />
-
-                <data android:scheme="package" />
+                <action android:name="android.intent.action.PACKAGE_ADDED"/>
+                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
+                <data android:scheme="package"/>
             </intent-filter>
-        </receiver>
-
-        <!-- Required SDK核心功能-->
+        </receiver> <!-- Required SDK核心功能 -->
         <receiver
                 android:name="cn.jpush.android.service.AlarmReceiver"
-                android:exported="false" />
-
-        <!-- Required since JCore 1.1.7. SDK 核心功能-->
+                android:exported="false"/> <!-- Required since JCore 1.1.7. SDK 核心功能 -->
         <provider
                 android:name="cn.jpush.android.service.DataProvider"
                 android:authorities="ims.chat.DataProvider"
-                android:exported="false" />
-
-        <!-- Required since JMessage 2.7.0 SDK 核心功能-->
+                android:exported="false"/> <!-- Required since JMessage 2.7.0 SDK 核心功能 -->
         <provider
                 android:name="cn.jpush.im.android.helpers.ipc.IMProvider"
                 android:authorities="ims.chat.IMProvider"
-                android:exported="false" />
-
-        <!-- Required JMessage SDK核心功能-->
+                android:exported="false"/> <!-- Required JMessage SDK核心功能 -->
         <receiver
                 android:name="cn.jpush.im.android.helpers.IMReceiver"
                 android:enabled="true"
                 android:exported="false">
-        </receiver>
-
-        <!-- since JCore 1.8.0 option 可选项。用于同一设备中不同应用的 jiguang 服务相互拉起的功能。 -->
+        </receiver> <!-- since JCore 1.8.0 option 可选项。用于同一设备中不同应用的 jiguang 服务相互拉起的功能。 -->
         <!-- 若不启用该功能可删除该组件，或把 enabled 设置成 false ；拉起服务被关闭，App 不会通过拉起服务拉起其他的 App，也不会被其他 App 拉起。 -->
         <service
                 android:name="cn.jpush.android.service.DaemonService"
                 android:enabled="true"
                 android:exported="true">
-            <intent-filter >
-                <action android:name="cn.jpush.android.intent.DaemonService" />
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.DaemonService"/>
+
                 <category android:name="ims.chat"/>
             </intent-filter>
-        </service>
-
-        <!-- Required. For publish channel feature -->
-        <!-- JPUSH_CHANNEL 是为了方便开发者统计APK分发渠道。-->
+        </service> <!-- Required. For publish channel feature -->
+        <!-- JPUSH_CHANNEL 是为了方便开发者统计APK分发渠道。 -->
         <!-- 例如: -->
         <!-- 发到 Google Play 的APK可以设置为 google-play; -->
         <!-- 发到其他市场的 APK 可以设置为 xxx-market。 -->
-        <!-- 目前这个渠道统计功能的报表还未开放。-->
+        <!-- 目前这个渠道统计功能的报表还未开放。 -->
         <meta-data
                 android:name="JPUSH_CHANNEL"
-                android:value="developer-default" />
-
-        <!-- Required. AppKey copied from Portal -->
+                android:value="developer-default"/> <!-- Required. AppKey copied from Portal -->
         <meta-data
                 android:name="JPUSH_APPKEY"
-                android:value="561589b93039fc4d77ebd73d" />
-
-    <activity android:name="ims.chat.ui.activity.WebActivity"/>
-        <activity android:name="ims.chat.ui.activity.NewsActivity"/>
-        <activity android:name="ims.chat.ui.activity.RobotChatActivity"/>
-        <activity android:name="ims.chat.ui.activity.PersonalInfoActivity"/>
-        <activity android:name="ims.chat.ui.activity.ConfigActivity"/>
-        <activity android:name="ims.chat.ui.activity.SplashActivity">
+                android:value="561589b93039fc4d77ebd73d"/>
+        <activity android:name=".ui.activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name="ims.chat.ui.activity.LoginActivity"/>
-        <activity android:name="ims.chat.ui.activity.RegisterActivity"/>
-        <activity android:name="ims.chat.ui.activity.MainActivity"/>
+        <activity android:name=".ui.activity.WebActivity"/>
+        <activity android:name=".ui.activity.NewsActivity"/>
+        <activity android:name=".ui.activity.RobotChatActivity"/>
+        <activity android:name=".ui.activity.PersonalInfoActivity"/>
+        <activity android:name=".ui.activity.ConfigActivity"/>
+        <activity android:name=".ui.activity.LoginActivity"/>
+        <activity android:name=".ui.activity.MainActivity"/>
+        <activity android:name=".ui.activity.FinishRegisterActivity"/>
+        <provider
+                android:name="com.activeandroid.content.ContentProvider"
+                android:authorities="${applicationId}"
+                android:exported="false" />
     </application>
 
 </manifest>
