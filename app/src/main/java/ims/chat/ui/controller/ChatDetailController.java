@@ -319,7 +319,7 @@ public class ChatDetailController implements OnClickListener, OnItemClickListene
                 delete.setOnClickListener(listen);
                 cancel.setOnClickListener(listen);
                 break;
-            case R.id.chat_file:
+//            case R.id.chat_file:
 //                intent = new Intent(mContext, HistoryFileActivity.class);
 //                intent.putExtra("userName", mTargetId);
 //                intent.putExtra("groupId", mGroupId);

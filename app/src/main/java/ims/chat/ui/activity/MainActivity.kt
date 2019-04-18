@@ -6,35 +6,30 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
-import android.support.design.widget.Snackbar
 import android.support.v4.view.ViewPager
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import cn.jpush.im.android.api.JMessageClient
+import com.bumptech.glide.Glide
 import ims.chat.R
-import ims.chat.database.UserEntry
+import ims.chat.baidu.OCRActivity
 import ims.chat.entity.User
 import ims.chat.task.ViewPagerAdapter
+import ims.chat.ui.controller.ActivityController
 import ims.chat.ui.fragment.BaseFragment
-import ims.chat.ui.fragment.ContactsFragment
+import ims.chat.ui.fragment.FriendFragment
 import ims.chat.ui.fragment.MessageListFragment
-import ims.chat.utils.ActivityController
-import ims.chat.utils.MyToast
-import ims.chat.utils.ResourceUtil
+import ims.chat.utils.*
 import kotlinx.android.synthetic.main.main_activity.*
-import kotlinx.android.synthetic.main.message_item.*
 import kotlinx.android.synthetic.main.nav_header.*
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.viewpager.*
 
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
-    private lateinit var userEntry: UserEntry
     private var messageListFragment: MessageListFragment? = null
-    private var friendListFragment: ContactsFragment? = null
+    private var friendListFragment: FriendFragment? = null
     private var menuItem: MenuItem? = null
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
@@ -45,8 +40,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         //添加消息碎片
         val adapter = ViewPagerAdapter(supportFragmentManager)
         messageListFragment = MessageListFragment()
-        friendListFragment = ContactsFragment()
-
+        friendListFragment = FriendFragment()
         adapter.addFragment(messageListFragment!!)
         adapter.addFragment(friendListFragment!!)
         adapter.addFragment(BaseFragment.newInstance("动态"))
@@ -88,8 +82,10 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         viewpager!!.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
                 when (position) {
-                    0 -> toolbar.title = "消息"
-                    1 -> toolbar.title = "联系人"
+                    0 ->{ toolbar.title = "消息"}
+                    1 -> {
+                        toolbar.title = "联系人"
+                    }
                     2 -> toolbar.title = "动态"
                     else -> {
                     }
@@ -118,15 +114,26 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        var intent:Intent
         when (item.itemId) {
             android.R.id.home ->{
                 drawerLayout!!.openDrawer(Gravity.START)
                 val user = JMessageClient.getMyInfo()
+                val att = SharePreferenceManager.getCachedAvatarPath();
+                if(null!=att){
+                    Glide.with(this@MainActivity).load(att).into(icon_img)
+                }
                 nav_userName.text = user.nickname
                 nav_phone.text= user.userName
 
             }
-            R.id.settings -> MyToast.toastShort(this, ResourceUtil.getString(this, R.string.is_developing))
+            R.id.add ->{
+                intent = Intent(this@MainActivity,SearchForAddFriendActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.search_title ->{
+                ToastUtil.shortToast(this,"查找")
+            }
             else -> {
             }
         }
@@ -146,17 +153,25 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                 val intent = Intent(this@MainActivity, NewsActivity::class.java)
                 startActivity(intent)
             }
+
+            R.id.ocr ->{
+                navView.setCheckedItem(R.id.news)
+                //启动新闻界面
+                val intent = Intent(this@MainActivity, OCRActivity::class.java)
+                startActivity(intent)
+            }
             R.id.exit -> {
                 navView.setCheckedItem(R.id.exit)
                 val alertDialog:AlertDialog.Builder = AlertDialog.Builder(this)
+
                 alertDialog.setTitle("退出")
                 alertDialog.setIcon(R.drawable.exit_black)
                 alertDialog.setMessage("确定退出应用吗？")
                 alertDialog.setPositiveButton("确定") { _: DialogInterface, _: Int ->
+                    JMessageClient.logout()
                     ActivityController.finishAll();
                 }
                 alertDialog.setNegativeButton("取消"){ _: DialogInterface, _: Int ->
-                    Snackbar.make(view,"您取消了操作",Snackbar.LENGTH_LONG).show()
                 }
                 alertDialog.show()
             }

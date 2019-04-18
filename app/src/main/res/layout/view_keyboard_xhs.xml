@@ -24,7 +24,7 @@
             android:src="@drawable/btn_voice_or_text"/>
 
         <!--语音输入-->
-        <ims.chat.view.RecordVoiceButton
+        <ims.chat.utils.RecordVoiceButton
             android:id="@+id/btn_voice"
             android:layout_width="match_parent"
             android:layout_height="34dp"

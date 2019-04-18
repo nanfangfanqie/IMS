@@ -49,7 +49,6 @@ public class ChatDetailView extends LinearLayout {
     public ChatDetailView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.mContext = context;
-        // TODO Auto-generated constructor stub
     }
 
     public void initModule() {
@@ -64,10 +63,10 @@ public class ChatDetailView extends LinearLayout {
         mGroupNumLL = (LinearLayout) findViewById(R.id.group_num_ll);
         mGroupChatRecordLL = (LinearLayout) findViewById(R.id.group_chat_record_ll);
         mGroupChatDelLL = (LinearLayout) findViewById(R.id.group_chat_del_ll);
-        mChatFile = (LinearLayout) findViewById(R.id.chat_file);
+//        mChatFile = (LinearLayout) findViewById(R.id.chat_file);
         mReturnBtn = (ImageButton) findViewById(R.id.return_btn);
         mTitle = (TextView) findViewById(R.id.title);
-//        mMenuBtn = (ImageButton) findViewById(R.id.right_btn);
+        mMenuBtn = (ImageButton) findViewById(R.id.right_btn);
         mDelGroupBtn = (Button) findViewById(R.id.chat_detail_del_group);
         mGroupName = (TextView) findViewById(R.id.chat_detail_group_name);
         mMyName = (TextView) findViewById(R.id.chat_detail_my_name);
@@ -101,7 +100,7 @@ public class ChatDetailView extends LinearLayout {
         mTv_moreGroup.setOnClickListener(onClickListener);
         mAddFriend.setOnClickListener(onClickListener);
         mClear_rl.setOnClickListener(onClickListener);
-        mChatFile.setOnClickListener(onClickListener);
+//        mChatFile.setOnClickListener(onClickListener);
     }
 
     public void setOnChangeListener(SlipButton.OnChangedListener listener) {

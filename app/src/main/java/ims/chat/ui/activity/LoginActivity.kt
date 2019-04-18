@@ -13,6 +13,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import com.bumptech.glide.Glide
 import com.yang.crypt.MessageDigetUtil
 import ims.chat.R
 import ims.chat.application.ImsApplication
@@ -89,10 +90,17 @@ class LoginActivity : BaseActivity(), View.OnClickListener, TextWatcher {
         btnSubmit.setText(R.string.login)
         val userName = SharePreferenceManager.getCachedUsername()
         val userAvatar = SharePreferenceManager.getCachedAvatarPath()
+        val password = SharePreferenceManager.getCachedPsw()
         edtUserName.setText(userName)
-        edtPassword.setText(userAvatar)
+        edtPassword.setText(password)
+        if(null!=userAvatar){
+            Glide.with(this@LoginActivity).load(userAvatar).into(imgHeader)
+        }
     }
     override fun onClick(v: View) {
+        val userName = SharePreferenceManager.getCachedUsername()
+        val userAvatar = SharePreferenceManager.getCachedAvatarPath()
+        val password = SharePreferenceManager.getCachedPsw()
         when (v) {
             txtToggle ->{
                 if(ImsApplication.registerOrLogin % 2== 1){
@@ -101,17 +109,18 @@ class LoginActivity : BaseActivity(), View.OnClickListener, TextWatcher {
                     btnSubmit.text = "注册"
                     txtLable.text = "已有帐号？"
                     txtToggle.text = "现在登录"
+                    imgHeader.setImageResource(R.drawable.qipao)
                 }else{
                     //登录
                     toolbar.title = "登录"
                     btnSubmit.text = "登录"
                     txtLable.text = "还没有帐号？"
                     txtToggle.text = "现在注册"
+                    if(null!=userAvatar){
+                        Glide.with(this@LoginActivity).load(userAvatar).into(imgHeader)
+                    }
                 }
-
                 ImsApplication.registerOrLogin ++
-            }
-            else -> {
             }
         }
     }

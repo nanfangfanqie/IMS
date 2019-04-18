@@ -28,6 +28,7 @@ public class SetNoteNameActivity extends IBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note_name);
+        initTitle(true, true, "设置备注", "", true, "保存");
         mNote_name = (EditText) findViewById(R.id.note_name);
         mJmui_commit_btn = (Button) findViewById(R.id.jmui_commit_btn);
         mNote_name.setText(getIntent().getStringExtra("note"));

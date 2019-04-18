@@ -7,11 +7,13 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -45,7 +47,6 @@ import ims.chat.entity.EventType;
 import ims.chat.model.Constants;
 import ims.chat.ui.view.ChatView;
 import ims.chat.ui.view.SimpleAppsGridView;
-import ims.chat.ui.view.listview.DropDownListView;
 import ims.chat.utils.*;
 import ims.chat.utils.event.ImageEvent;
 import ims.chat.utils.imagepicker.bean.ImageItem;
@@ -55,6 +56,8 @@ import ims.chat.utils.keyboard.interfaces.EmoticonClickListener;
 import ims.chat.utils.keyboard.utils.EmoticonsKeyboardUtils;
 import ims.chat.utils.keyboard.widget.EmoticonsEditText;
 import ims.chat.utils.keyboard.widget.FuncLayout;
+import ims.chat.utils.listview.DropDownListView;
+import ims.chat.utils.photovideo.takevideo.CameraActivity;
 import ims.chat.utils.pickerimage.PickImageActivity;
 import ims.chat.utils.pickerimage.utils.Extras;
 import ims.chat.utils.pickerimage.utils.RequestCode;
@@ -66,7 +69,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChatActivity extends IBaseActivity implements FuncLayout.OnFuncKeyBoardListener, View.OnClickListener {
-
     public static final String JPG = ".jpg";
     private static String MsgIDs = "msgIDs";
 
@@ -118,26 +120,22 @@ public class ChatActivity extends IBaseActivity implements FuncLayout.OnFuncKeyB
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
-
         setContentView(R.layout.activity_chat);
         mChatView = (ChatView) findViewById(R.id.chat_view);
         mChatView.initModule(mDensity, mDensityDpi);
-
         this.mWindow = getWindow();
         this.mImm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
         mChatView.setListeners(this);
-
-
         initData();
         initView();
 
     }
 
     private void initData() {
-        SimpleCommonUtils.initEmoticonsEditText(ekBar.getEtChat());
         Intent intent = getIntent();
-        lvChat = (DropDownListView) findViewById(R.id.lv_chat);
         ekBar = (XhsEmoticonsKeyBoard) findViewById(R.id.ek_bar);
+        lvChat = (DropDownListView) findViewById(R.id.lv_chat);
+        SimpleCommonUtils.initEmoticonsEditText(ekBar.getEtChat());
         mTargetId = intent.getStringExtra(TARGET_ID);
         mTargetAppKey = intent.getStringExtra(TARGET_APP_KEY);
         mTitle = intent.getStringExtra(ImsApplication.CONV_TITLE);
@@ -300,7 +298,6 @@ public class ChatActivity extends IBaseActivity implements FuncLayout.OnFuncKeyB
     EmoticonClickListener emoticonClickListener = new EmoticonClickListener() {
         @Override
         public void onEmoticonClick(Object o, int actionType, boolean isDelBtn) {
-
             if (isDelBtn) {
                 SimpleCommonUtils.delClick(ekBar.getEtChat());
             } else {
@@ -318,7 +315,6 @@ public class ChatActivity extends IBaseActivity implements FuncLayout.OnFuncKeyB
                     } else if (o instanceof EmoticonEntity) {
                         content = ((EmoticonEntity) o).getContent();
                     }
-
                     if (TextUtils.isEmpty(content)) {
                         return;
                     }
@@ -627,67 +623,59 @@ public class ChatActivity extends IBaseActivity implements FuncLayout.OnFuncKeyB
                     view.getLocationOnScreen(location);
                     float OldListY = (float) location[1];
                     float OldListX = (float) location[0];
-                    new TipView.Builder(ChatActivity.this, mChatView, (int) OldListX + view.getWidth() / 2, (int) OldListY + view.getHeight())
+                    new TipView.Builder(ChatActivity.this, mChatView, (int) OldListX + view.getWidth(), (int) OldListY + view.getHeight())
                             .addItem(new TipItem("复制"))
-                            .addItem(new TipItem("转发"))
                             .addItem(new TipItem("撤回"))
                             .addItem(new TipItem("删除"))
                             .setOnItemClickListener(new TipView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(String str, final int position) {
-                                    if (position == 0) {
-                                        if (msg.getContentType() == ContentType.text) {
-                                            final String content = ((TextContent) msg.getContent()).getText();
-                                            if (Build.VERSION.SDK_INT > 11) {
-                                                ClipboardManager clipboard = (ClipboardManager) mContext
-                                                        .getSystemService(Context.CLIPBOARD_SERVICE);
-                                                ClipData clip = ClipData.newPlainText("Simple text", content);
-                                                clipboard.setPrimaryClip(clip);
+                                    switch (position) {
+                                        case 0:
+                                            if (msg.getContentType() == ContentType.text) {
+                                                final String content = ((TextContent) msg.getContent()).getText();
+                                                if (Build.VERSION.SDK_INT > 11) {
+                                                    ClipboardManager clipboard = (ClipboardManager) mContext
+                                                            .getSystemService(Context.CLIPBOARD_SERVICE);
+                                                    ClipData clip = ClipData.newPlainText("Simple text", content);
+                                                    clipboard.setPrimaryClip(clip);
+                                                } else {
+                                                    android.text.ClipboardManager clip = (android.text.ClipboardManager) mContext
+                                                            .getSystemService(Context.CLIPBOARD_SERVICE);
+                                                    if (clip.hasText()) {
+                                                        clip.getText();
+                                                    }
+                                                }
+                                                Toast.makeText(ChatActivity.this, "已复制", Toast.LENGTH_SHORT).show();
                                             } else {
-                                                android.text.ClipboardManager clip = (android.text.ClipboardManager) mContext
-                                                        .getSystemService(Context.CLIPBOARD_SERVICE);
-                                                if (clip.hasText()) {
-                                                    clip.getText();
-                                                }
+                                                Toast.makeText(ChatActivity.this, "只支持复制文字", Toast.LENGTH_SHORT).show();
                                             }
-                                            Toast.makeText(ChatActivity.this, "已复制", Toast.LENGTH_SHORT).show();
-                                        } else {
-                                            Toast.makeText(ChatActivity.this, "只支持复制文字", Toast.LENGTH_SHORT).show();
-                                        }
-                                    } else if (position == 1) {
-//                                        //转发
-//                                        if (msg.getContentType() == ContentType.text || msg.getContentType() == ContentType.image ||
-//                                                (msg.getContentType() == ContentType.file && (msg.getContent()).getStringExtra("video") != null)) {
-//                                            Intent intent = new Intent(ChatActivity.this, ForwardMsgActivity.class);
-//                                            ImsApplication.forwardMsg.clear();
-//                                            ImsApplication.forwardMsg.add(msg);
-//                                            startActivity(intent);
-//                                        } else {
-//                                            Toast.makeText(ChatActivity.this, "只支持转发文本,图片,小视频", Toast.LENGTH_SHORT).show();
-//                                        }
-                                    } else if (position == 2) {
-                                        //撤回
-                                        mConv.retractMessage(msg, new BasicCallback() {
-                                            @Override
-                                            public void gotResult(int i, String s) {
-                                                if (i == 855001) {
-                                                    Toast.makeText(ChatActivity.this, "发送时间过长，不能撤回", Toast.LENGTH_SHORT).show();
-                                                } else if (i == 0) {
-                                                    mChatAdapter.delMsgRetract(msg);
+                                            break;
+                                        case 1:
+                                            //撤回
+                                            mConv.retractMessage(msg, new BasicCallback() {
+                                                @Override
+                                                public void gotResult(int i, String s) {
+                                                    if (i == 855001) {
+                                                        Toast.makeText(ChatActivity.this, "发送时间过长，不能撤回", Toast.LENGTH_SHORT).show();
+                                                    } else if (i == 0) {
+                                                        mChatAdapter.delMsgRetract(msg);
+                                                    }
                                                 }
-                                            }
-                                        });
-                                    } else {
-                                        //删除
-                                        mConv.deleteMessage(msg.getId());
-                                        mChatAdapter.removeMessage(msg);
+                                            });
+                                            break;
+                                        case 2:
+                                            //删除
+                                            mConv.deleteMessage(msg.getId());
+                                            mChatAdapter.removeMessage(msg);
+                                            break;
+                                        default:
+                                            break;
+
                                     }
                                 }
-
                                 @Override
-                                public void dismiss() {
-
-                                }
+                                public void dismiss() { }
                             })
                             .create();
                 }
@@ -700,20 +688,14 @@ public class ChatActivity extends IBaseActivity implements FuncLayout.OnFuncKeyB
                     float OldListY = (float) location[1];
                     float OldListX = (float) location[0];
                     new TipView.Builder(ChatActivity.this, mChatView, (int) OldListX + view.getWidth() / 2, (int) OldListY + view.getHeight())
-                            .addItem(new TipItem("转发"))
                             .addItem(new TipItem("删除"))
                             .setOnItemClickListener(new TipView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(String str, final int position) {
-                                    if (position == 1) {
+                                    if (position == 0) {
                                         //删除
                                         mConv.deleteMessage(msg.getId());
                                         mChatAdapter.removeMessage(msg);
-                                    } else {
-                                       /* Intent intent = new Intent(ChatActivity.this, ForwardMsgActivity.class);
-                                        JGApplication.forwardMsg.clear();
-                                        JGApplication.forwardMsg.add(msg);
-                                        startActivity(intent);*/
                                     }
                                 }
 
@@ -730,39 +712,39 @@ public class ChatActivity extends IBaseActivity implements FuncLayout.OnFuncKeyB
                     float OldListY = (float) location[1];
                     float OldListX = (float) location[0];
                     new TipView.Builder(ChatActivity.this, mChatView, (int) OldListX + view.getWidth() / 2, (int) OldListY + view.getHeight())
-                            .addItem(new TipItem("转发"))
                             .addItem(new TipItem("撤回"))
                             .addItem(new TipItem("删除"))
                             .setOnItemClickListener(new TipView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(String str, final int position) {
-                                    if (position == 1) {
-                                        //撤回
-                                        mConv.retractMessage(msg, new BasicCallback() {
-                                            @Override
-                                            public void gotResult(int i, String s) {
-                                                if (i == 855001) {
-                                                    Toast.makeText(ChatActivity.this, "发送时间过长，不能撤回", Toast.LENGTH_SHORT).show();
-                                                } else if (i == 0) {
-                                                    mChatAdapter.delMsgRetract(msg);
+                                    switch (position) {
+                                        case 0:
+                                            //撤回
+                                            mConv.retractMessage(msg, new BasicCallback() {
+                                                @Override
+                                                public void gotResult(int i, String s) {
+                                                    if (i == 855001) {
+                                                        Toast.makeText(ChatActivity.this, "发送时间过长，不能撤回", Toast.LENGTH_SHORT).show();
+                                                    } else if (i == 0) {
+                                                        mChatAdapter.delMsgRetract(msg);
+                                                    }
                                                 }
-                                            }
-                                        });
-                                    } else if (position == 0) {
-                                    /*    Intent intent = new Intent(ChatActivity.this, ForwardMsgActivity.class);
-                                        JGApplication.forwardMsg.clear();
-                                        JGApplication.forwardMsg.add(msg);
-                                        startActivity(intent);*/
-                                    } else {
-                                        //删除
-                                        mConv.deleteMessage(msg.getId());
-                                        mChatAdapter.removeMessage(msg);
+                                            });
+                                            break;
+
+                                        case 1:
+                                            //删除
+                                            mConv.deleteMessage(msg.getId());
+                                            mChatAdapter.removeMessage(msg);
+                                            break;
+                                        default:
+                                            break;
+
                                     }
                                 }
 
                                 @Override
                                 public void dismiss() {
-
                                 }
                             })
                             .create();
@@ -787,27 +769,27 @@ public class ChatActivity extends IBaseActivity implements FuncLayout.OnFuncKeyB
         Intent intent;
         switch (event.getFlag()) {
             case ImsApplication.IMAGE_MESSAGE:
-//                int from = PickImageActivity.FROM_LOCAL;
-//                int requestCode = RequestCode.PICK_IMAGE;
-//                if (ContextCompat.checkSelfPermission(ChatActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-//                        != PackageManager.PERMISSION_GRANTED) {
-//                    Toast.makeText(this, "请在应用管理中打开“读写存储”访问权限！", Toast.LENGTH_LONG).show();
-//                } else {
-//                    PickImageActivity.start(ChatActivity.this, requestCode, from, tempFile(), true, 9,
-//                            true, false, 0, 0);
-//                }
+                int from = PickImageActivity.FROM_LOCAL;
+                int requestCode = RequestCode.PICK_IMAGE;
+                if (ContextCompat.checkSelfPermission(ChatActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(this, "请在应用管理中打开“读写存储”访问权限！", Toast.LENGTH_LONG).show();
+                } else {
+                    PickImageActivity.start(ChatActivity.this, requestCode, from, tempFile(), true, 9,
+                            true, false, 0, 0);
+                }
                 break;
             case ImsApplication.TAKE_PHOTO_MESSAGE:
-//                if ((ContextCompat.checkSelfPermission(ChatActivity.this, Manifest.permission.CAMERA)
-//                        != PackageManager.PERMISSION_GRANTED) || (ContextCompat.checkSelfPermission(ChatActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-//                        != PackageManager.PERMISSION_GRANTED) || (ContextCompat.checkSelfPermission(ChatActivity.this, Manifest.permission.RECORD_AUDIO)
-//                        != PackageManager.PERMISSION_GRANTED)) {
-//                    Toast.makeText(this, "请在应用管理中打开“相机,读写存储,录音”访问权限！", Toast.LENGTH_LONG).show();
-//                } else {
-//                    intent = new Intent(ChatActivity.this, CameraActivity.class);
-//                    startActivityForResult(intent, RequestCode.TAKE_PHOTO);
-//                }
-//                break;
+                if ((ContextCompat.checkSelfPermission(ChatActivity.this, Manifest.permission.CAMERA)
+                        != PackageManager.PERMISSION_GRANTED) || (ContextCompat.checkSelfPermission(ChatActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED) || (ContextCompat.checkSelfPermission(ChatActivity.this, Manifest.permission.RECORD_AUDIO)
+                        != PackageManager.PERMISSION_GRANTED)) {
+                    Toast.makeText(this, "请在应用管理中打开“相机,读写存储,录音”访问权限！", Toast.LENGTH_LONG).show();
+                } else {
+                    intent = new Intent(ChatActivity.this, CameraActivity.class);
+                    startActivityForResult(intent, RequestCode.TAKE_PHOTO);
+                }
+                break;
             case ImsApplication.FILE_MESSAGE:
 //                if (ContextCompat.checkSelfPermission(this,
 //                        Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -1029,31 +1011,12 @@ public class ChatActivity extends IBaseActivity implements FuncLayout.OnFuncKeyB
                                 .setOffset(activity.mChatAdapter.getOffset());
                         break;
                     case REFRESH_GROUP_NAME:
-//                        if (activity.mConv != null) {
-//                            int num = msg.getData().getInt(MEMBERS_COUNT);
-//                            String groupName = msg.getData().getString(GROUP_NAME);
-////                            activity.mChatView.setChatTitle(groupName, num);
-//                        }
-                        break;
                     case REFRESH_GROUP_NUM:
                         int num = msg.getData().getInt(MEMBERS_COUNT);
                         activity.mChatView.setChatTitle(R.string.group, num);
                         break;
                     case REFRESH_CHAT_TITLE:
                         if (activity.mGroupInfo != null) {
-                            //检查自己是否在群组中
-                            UserInfo info = activity.mGroupInfo.getGroupMemberInfo(activity.mMyInfo.getUserName(),
-                                    activity.mMyInfo.getAppKey());
-                            if (!TextUtils.isEmpty(activity.mGroupInfo.getGroupName())) {
-                                if (info != null) {
-//                                    activity.mChatView.setChatTitle(activity.mTitle,
-//                                            activity.mGroupInfo.getGroupMembers().size());
-                                    activity.mChatView.showRightBtn();
-                                } else {
-                                    activity.mChatView.setChatTitle(activity.mTitle);
-                                    activity.mChatView.dismissRightBtn();
-                                }
-                            }
                         }
                         break;
                 }

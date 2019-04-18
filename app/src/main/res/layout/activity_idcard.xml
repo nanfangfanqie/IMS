@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2017 Baidu, Inc. All Rights Reserved.
+  -->
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/activity_idcard"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <include layout="@layout/toolbar"/>
+
+    <Button
+            android:text="相册选择 正面"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/gallery_button_front"
+            android:visibility="gone"
+            tools:ignore="HardcodedText"/>
+
+    <Button
+            android:text="相册选择 反面"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/gallery_button_back"
+            android:visibility="gone"
+            tools:ignore="HardcodedText"/>
+
+    <Button
+            android:text="身份证正面"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:id="@+id/id_card_front_button"
+            tools:ignore="HardcodedText"/>
+
+    <Button
+        android:text="正面"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:textSize="50sp"
+        android:textColor="@color/white"
+        android:background="@color/colorPrimary"
+        android:id="@+id/id_card_front_button_native"
+        android:layout_weight="1"
+        tools:ignore="HardcodedText"/>
+
+    <Button
+            android:text="身份证反面"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/id_card_back_button"
+            android:visibility="gone"
+            tools:ignore="HardcodedText"/>
+
+    <Button
+        android:text="反面"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:textSize="50sp"
+        android:textColor="@color/white"
+        android:background="@color/colorPrimary"
+        android:id="@+id/id_card_back_button_native"
+        android:layout_weight="1"
+        tools:ignore="HardcodedText"/>
+
+    <TextView
+            android:id="@+id/info_text_view"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="0dp"/>
+
+</LinearLayout>

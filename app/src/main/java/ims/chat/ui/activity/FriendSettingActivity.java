@@ -41,7 +41,6 @@ public class FriendSettingActivity extends IBaseActivity implements SlipButton.O
     private TextView mTv_noteName;
     private Dialog mDialog;
     private UserInfo mFriendInfo;
-    private RelativeLayout mRl_business;
 
 
     @Override
@@ -58,7 +57,6 @@ public class FriendSettingActivity extends IBaseActivity implements SlipButton.O
         mBtn_addBlackList.setOnChangedListener(R.id.btn_addBlackList, this);
         mBtn_deleteFriend.setOnClickListener(this);
         mSetNoteName.setOnClickListener(this);
-        mRl_business.setOnClickListener(this);
     }
 
     @Override
@@ -141,7 +139,6 @@ public class FriendSettingActivity extends IBaseActivity implements SlipButton.O
         mBtn_addBlackList = (SlipButton) findViewById(R.id.btn_addBlackList);
         mBtn_deleteFriend = (Button) findViewById(R.id.btn_deleteFriend);
         mTv_noteName = (TextView) findViewById(R.id.tv_noteName);
-        mRl_business = (RelativeLayout) findViewById(R.id.rl_business);
         final Dialog dialog = DialogCreator.createLoadingDialog(FriendSettingActivity.this,
                 FriendSettingActivity.this.getString(R.string.jmui_loading));
         dialog.show();

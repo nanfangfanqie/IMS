@@ -53,7 +53,6 @@ public class IBaseActivity extends SwipeBackActivity {
         mHeight = dm.heightPixels;
         mRatio = Math.min((float) mWidth / 720, (float) mHeight / 1280);
         mAvatarSize = (int) (50 * mDensity);
-
     }
 
     //初始化各个activity的title

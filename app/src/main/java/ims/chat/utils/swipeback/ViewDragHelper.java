@@ -35,7 +35,7 @@ public class ViewDragHelper {
     private static final String TAG = "ViewDragHelper";
 
     /**
-     * A null/invalid pointer ID.
+     * A null/invalid pointer IDCard.
      */
     public static final int INVALID_POINTER = -1;
 
@@ -183,7 +183,7 @@ public class ViewDragHelper {
         }
 
         /**
-         * Called when a child view is captured for dragging or settling. The ID
+         * Called when a child view is captured for dragging or settling. The IDCard
          * of the pointer currently dragging the captured view is supplied. If
          * activePointerId is identified as {@link #INVALID_POINTER} the capture
          * is programmatic instead of pointer-initiated.
@@ -225,7 +225,7 @@ public class ViewDragHelper {
          *
          * @param edgeFlags A combination of edge flags describing the edge(s)
          *                  currently touched
-         * @param pointerId ID of the pointer touching the described edge(s)
+         * @param pointerId IDCard of the pointer touching the described edge(s)
          * @see #EDGE_LEFT
          * @see #EDGE_TOP
          * @see #EDGE_RIGHT
@@ -256,7 +256,7 @@ public class ViewDragHelper {
          *
          * @param edgeFlags A combination of edge flags describing the edge(s)
          *                  dragged
-         * @param pointerId ID of the pointer touching the described edge(s)
+         * @param pointerId IDCard of the pointer touching the described edge(s)
          * @see #EDGE_LEFT
          * @see #EDGE_TOP
          * @see #EDGE_RIGHT
@@ -317,7 +317,7 @@ public class ViewDragHelper {
          * </p>
          *
          * @param child     Child the user is attempting to capture
-         * @param pointerId ID of the pointer attempting the capture
+         * @param pointerId IDCard of the pointer attempting the capture
          * @return true if capture should be allowed, false otherwise
          */
         public abstract boolean tryCaptureView(View child, int pointerId);
@@ -527,7 +527,7 @@ public class ViewDragHelper {
      * will not be asked permission to capture this view.
      *
      * @param childView       Child view to capture
-     * @param activePointerId ID of the pointer that is dragging the captured
+     * @param activePointerId IDCard of the pointer that is dragging the captured
      *                        child view
      */
     public void captureChildView(View childView, int activePointerId) {
@@ -551,7 +551,7 @@ public class ViewDragHelper {
     }
 
     /**
-     * @return The ID of the pointer currently dragging the captured view, or
+     * @return The IDCard of the pointer currently dragging the captured view, or
      * {@link #INVALID_POINTER}.
      */
     public int getActivePointerId() {
@@ -934,7 +934,7 @@ public class ViewDragHelper {
     }
 
     /**
-     * Check if the given pointer ID represents a pointer that is currently down
+     * Check if the given pointer IDCard represents a pointer that is currently down
      * (to the best of the ViewDragHelper's knowledge).
      * <p>
      * The state used to report this information is populated by the methods
@@ -944,9 +944,9 @@ public class ViewDragHelper {
      * information reported by this method may be stale or incorrect.
      * </p>
      *
-     * @param pointerId pointer ID to check; corresponds to IDs provided by
+     * @param pointerId pointer IDCard to check; corresponds to IDs provided by
      *                  MotionEvent
-     * @return true if the pointer with the given ID is still down
+     * @return true if the pointer with the given IDCard is still down
      */
     public boolean isPointerDown(int pointerId) {
         return (mPointersDown & 1 << pointerId) != 0;
@@ -963,7 +963,7 @@ public class ViewDragHelper {
     }
 
     /**
-     * Attempt to capture the view with the given pointer ID. The callback will
+     * Attempt to capture the view with the given pointer IDCard. The callback will
      * be involved. This will put us into the "dragging" state. If we've already
      * captured this view with this pointer this method will immediately return
      * true without consulting the callback.
@@ -1406,7 +1406,7 @@ public class ViewDragHelper {
      * @param directions Combination of direction flags, see
      *                   {@link #DIRECTION_HORIZONTAL}, {@link #DIRECTION_VERTICAL},
      *                   {@link #DIRECTION_ALL}
-     * @param pointerId  ID of the pointer to slop check as specified by
+     * @param pointerId  IDCard of the pointer to slop check as specified by
      *                   MotionEvent
      * @return true if the slop threshold has been crossed, false otherwise
      */
@@ -1454,8 +1454,8 @@ public class ViewDragHelper {
 
     /**
      * Check if any of the edges specified were initially touched by the pointer
-     * with the specified ID. If there is no currently active gesture or if
-     * there is no pointer with the given ID currently down this method will
+     * with the specified IDCard. If there is no currently active gesture or if
+     * there is no pointer with the given IDCard currently down this method will
      * return false.
      *
      * @param edges Edges to check for an initial edge touch. See

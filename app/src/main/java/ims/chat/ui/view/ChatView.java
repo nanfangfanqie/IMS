@@ -11,7 +11,7 @@ import cn.jpush.im.android.api.model.Conversation;
 import ims.chat.R;
 import ims.chat.adapter.ChattingListAdapter;
 import ims.chat.ui.activity.ChatActivity;
-import ims.chat.ui.view.listview.DropDownListView;
+import ims.chat.utils.listview.DropDownListView;
 
 /**
  * Created by ${chenyn} on 2017/3/28.

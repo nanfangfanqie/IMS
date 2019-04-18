@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ims.chat.view.ChatView android:id="@+id/chat_view"
+<ims.chat.ui.view.ChatView android:id="@+id/chat_view"
                             xmlns:android="http://schemas.android.com/apk/res/android"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:fitsSystemWindows="true"
                             android:orientation="vertical">
-
 
     <ims.chat.utils.keyboard.XhsEmoticonsKeyBoard
         android:id="@+id/ek_bar"
@@ -22,7 +21,7 @@
                 android:id="@+id/jmui_menu_title_bar"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/title_bar_height"
-                android:background="@color/jmui_jpush_blue">
+                android:background="@color/colorPrimary">
 
                 <ImageButton
                     android:id="@+id/jmui_return_btn"
@@ -71,8 +70,7 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-
-                <ims.chat.view.listview.DropDownListView
+                <ims.chat.utils.listview.DropDownListView
                     android:background="#E8EDF3"
                     android:id="@+id/lv_chat"
                     android:layout_width="match_parent"
@@ -94,7 +92,7 @@
                     android:layout_gravity="end"
                     android:layout_marginRight="5dp"
                     android:layout_marginTop="100dp"
-                    android:background="#2DD0CF"
+                    android:background="@color/colorPrimary"
                     android:text="有人@我"
                     android:textColor="#fff"
                     android:visibility="gone"/>
@@ -104,5 +102,5 @@
 
     </ims.chat.utils.keyboard.XhsEmoticonsKeyBoard>
 
-</ims.chat.view.ChatView>
+</ims.chat.ui.view.ChatView >
 

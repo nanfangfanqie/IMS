@@ -147,7 +147,7 @@ public class BrowserViewPagerActivity extends IBaseActivity {
                     File file = new File(path);
                     mPathList.add(path);
                     mViewPager.setAdapter(pagerAdapter);
-//                    mViewPager.addOnPageChangeListener(onPageChangeListener);
+                    mViewPager.addOnPageChangeListener(onPageChangeListener);
                     if (file.exists()) {
                         Picasso.with(mContext).load(file).into(photoView);
                     } else {
@@ -164,7 +164,7 @@ public class BrowserViewPagerActivity extends IBaseActivity {
         } else {
             mPathList = intent.getStringArrayListExtra("pathList");
             mViewPager.setAdapter(pagerAdapter);
-//            mViewPager.addOnPageChangeListener(onPageChangeListener);
+            mViewPager.addOnPageChangeListener(onPageChangeListener);
             int[] pathArray = intent.getIntArrayExtra("pathArray");
             //初始化选中了多少张图片
             for (int i = 0; i < pathArray.length; i++) {
@@ -401,31 +401,31 @@ public class BrowserViewPagerActivity extends IBaseActivity {
      * 滑动到当前页图片的第一张时，加载上一页消息中的图片
      */
     private void getImgMsg() {
-//        ImageContent ic;
-//        final int msgSize = mMsgIdList.size();
-//        List<Message> msgList = mConv.getMessagesFromNewest(mStart, mOffset);
-//        mOffset = msgList.size();
-//        if (mOffset > 0) {
-//            for (Message msg : msgList) {
-//                if (msg.getContentType().equals(ContentType.image)) {
-//                    mMsgIdList.add(0, msg.getId());
-//                    ic = (ImageContent) msg.getContent();
-//                    if (!TextUtils.isEmpty(ic.getLocalPath())) {
-//                        mPathList.add(0, ic.getLocalPath());
-//                    } else {
-//                        mPathList.add(0, ic.getLocalThumbnailPath());
-//                    }
-//                }
-//            }
-//            mStart += mOffset;
-//            if (msgSize == mMsgIdList.size()) {
-//                getImgMsg();
-//            } else {
-//                //加载完上一页图片后，设置当前图片仍为加载前的那一张图片
-//                mPosition = mMsgIdList.size() - msgSize;
-//                mUIHandler.sendMessage(mUIHandler.obtainMessage(SET_CURRENT_POSITION, mPosition));
-//            }
-//        }
+        ImageContent ic;
+        final int msgSize = mMsgIdList.size();
+        List<Message> msgList = mConv.getMessagesFromNewest(mStart, mOffset);
+        mOffset = msgList.size();
+        if (mOffset > 0) {
+            for (Message msg : msgList) {
+                if (msg.getContentType().equals(ContentType. image)) {
+                    mMsgIdList.add(0, msg.getId());
+                    ic = (ImageContent) msg.getContent();
+                    if (!TextUtils.isEmpty(ic.getLocalPath())) {
+                        mPathList.add(0, ic.getLocalPath());
+                    } else {
+                        mPathList.add(0, ic.getLocalThumbnailPath());
+                    }
+                }
+            }
+            mStart += mOffset;
+            if (msgSize == mMsgIdList.size()) {
+                getImgMsg();
+            } else {
+                //加载完上一页图片后，设置当前图片仍为加载前的那一张图片
+                mPosition = mMsgIdList.size() - msgSize;
+                mUIHandler.sendMessage(mUIHandler.obtainMessage(SET_CURRENT_POSITION, mPosition));
+            }
+        }
     }
 
     /**

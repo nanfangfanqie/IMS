@@ -7,9 +7,10 @@
 
     <ImageView
             android:id="@+id/img_friend_header"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="33.33dp"
+            android:layout_height="33.dp"
             android:src="@drawable/qipao"
+            android:layout_marginLeft="14.67dp"
             android:layout_margin="5dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"

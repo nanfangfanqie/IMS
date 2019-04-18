@@ -1,7 +1,6 @@
 package ims.chat.ui.controller;
 
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -26,31 +25,56 @@ import android.view.animation.LinearInterpolator;
 import android.webkit.MimeTypeMap;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.squareup.picasso.Picasso;
+
+import java.io.File;
+import java.io.FileDescriptor;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Queue;
+
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.android.api.callback.DownloadCompletionCallback;
+import cn.jpush.im.android.api.callback.GetUserInfoCallback;
 import cn.jpush.im.android.api.callback.ProgressUpdateCallback;
-import cn.jpush.im.android.api.content.*;
+import cn.jpush.im.android.api.content.CustomContent;
+import cn.jpush.im.android.api.content.EventNotificationContent;
+import cn.jpush.im.android.api.content.FileContent;
+import cn.jpush.im.android.api.content.ImageContent;
+import cn.jpush.im.android.api.content.LocationContent;
+import cn.jpush.im.android.api.content.PromptContent;
+import cn.jpush.im.android.api.content.TextContent;
+import cn.jpush.im.android.api.content.VoiceContent;
 import cn.jpush.im.android.api.enums.ContentType;
 import cn.jpush.im.android.api.enums.ConversationType;
 import cn.jpush.im.android.api.enums.MessageDirect;
 import cn.jpush.im.android.api.model.Conversation;
+import cn.jpush.im.android.api.model.GroupInfo;
 import cn.jpush.im.android.api.model.Message;
 import cn.jpush.im.android.api.model.UserInfo;
 import cn.jpush.im.android.api.options.MessageSendingOptions;
 import cn.jpush.im.api.BasicCallback;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.squareup.picasso.Picasso;
 import ims.chat.R;
+
 import ims.chat.adapter.ChattingListAdapter;
 import ims.chat.adapter.ChattingListAdapter.ViewHolder;
 import ims.chat.application.ImsApplication;
+import ims.chat.ui.activity.BrowserViewPagerActivity;
 import ims.chat.ui.activity.DownLoadActivity;
+import ims.chat.ui.activity.FriendInfoActivity;
+import ims.chat.ui.activity.GroupNotFriendActivity;
 import ims.chat.utils.*;
-
-import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.*;
 
 
 public class ChatItemController {
@@ -110,7 +134,147 @@ public class ChatItemController {
         });
     }
 
+    public void handleBusinessCard(final Message msg, final ViewHolder holder, int position) {
+        final TextContent[] textContent = {(TextContent) msg.getContent()};
+        final String[] mUserName = {textContent[0].getStringExtra("userName")};
+        final String mAppKey = textContent[0].getStringExtra("appKey");
+        holder.ll_businessCard.setTag(position);
+        int key = (mUserName[0] + mAppKey).hashCode();
+        UserInfo userInfo = mUserInfoMap.get(key);
+        if (userInfo != null) {
+            String name = userInfo.getNickname();
+            //如果没有昵称,名片上面的位置显示用户名
+            //如果有昵称,上面显示昵称,下面显示用户名
+            if (TextUtils.isEmpty(name)) {
+                holder.tv_userName.setText("");
+                holder.tv_nickUser.setText(mUserName[0]);
+            } else {
+                holder.tv_nickUser.setText(name);
+                holder.tv_userName.setText("用户名: " + mUserName[0]);
+            }
+            if (userInfo.getAvatarFile() != null) {
+                holder.business_head.setImageBitmap(BitmapFactory.decodeFile(userInfo.getAvatarFile().getAbsolutePath()));
+            } else {
+                holder.business_head.setImageResource(R.drawable.jmui_head_icon);
+            }
+        } else {
+            JMessageClient.getUserInfo(mUserName[0], mAppKey, new GetUserInfoCallback() {
+                @Override
+                public void gotResult(int i, String s, UserInfo userInfo) {
+                    if (i == 0) {
+                        mUserInfoMap.put((mUserName[0] + mAppKey).hashCode(), userInfo);
+                        String name = userInfo.getNickname();
+                        //如果没有昵称,名片上面的位置显示用户名
+                        //如果有昵称,上面显示昵称,下面显示用户名
+                        if (TextUtils.isEmpty(name)) {
+                            holder.tv_userName.setText("");
+                            holder.tv_nickUser.setText(mUserName[0]);
+                        } else {
+                            holder.tv_nickUser.setText(name);
+                            holder.tv_userName.setText("用户名: " + mUserName[0]);
+                        }
+                        if (userInfo.getAvatarFile() != null) {
+                            holder.business_head.setImageBitmap(BitmapFactory.decodeFile(userInfo.getAvatarFile().getAbsolutePath()));
+                        } else {
+                            holder.business_head.setImageResource(R.drawable.jmui_head_icon);
+                        }
+                    } else {
+                        HandleResponseCode.onHandle(mContext, i, false);
+                    }
+                }
+            });
+        }
 
+        holder.ll_businessCard.setOnLongClickListener(mLongClickListener);
+        holder.ll_businessCard.setOnClickListener(new BusinessCard(mUserName[0], mAppKey, holder));
+        if (msg.getDirect() == MessageDirect.send) {
+            switch (msg.getStatus()) {
+                case created:
+                    if (null != mUserInfo) {
+                        holder.sendingIv.setVisibility(View.GONE);
+                        holder.resend.setVisibility(View.VISIBLE);
+                        holder.text_receipt.setVisibility(View.GONE);
+                    }
+                    break;
+                case send_success:
+                    holder.text_receipt.setVisibility(View.VISIBLE);
+                    holder.sendingIv.clearAnimation();
+                    holder.sendingIv.setVisibility(View.GONE);
+                    holder.resend.setVisibility(View.GONE);
+                    break;
+                case send_fail:
+                    holder.text_receipt.setVisibility(View.GONE);
+                    holder.sendingIv.clearAnimation();
+                    holder.sendingIv.setVisibility(View.GONE);
+                    holder.resend.setVisibility(View.VISIBLE);
+                    break;
+                case send_going:
+                    sendingTextOrVoice(holder, msg);
+                    break;
+            }
+        } else {
+            if (mConv.getType() == ConversationType.group) {
+                if (msg.isAtMe()) {
+                    mConv.updateMessageExtra(msg, "isRead", true);
+                }
+                if (msg.isAtAll()) {
+                    mConv.updateMessageExtra(msg, "isReadAtAll", true);
+                }
+                holder.displayName.setVisibility(View.VISIBLE);
+                if (TextUtils.isEmpty(msg.getFromUser().getNickname())) {
+                    holder.displayName.setText(msg.getFromUser().getUserName());
+                } else {
+                    holder.displayName.setText(msg.getFromUser().getNickname());
+                }
+            }
+        }
+        if (holder.resend != null) {
+            holder.resend.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mAdapter.showResendDialog(holder, msg);
+                }
+            });
+        }
+    }
+
+    private class BusinessCard implements View.OnClickListener {
+        private String userName;
+        private String appKey;
+        private ViewHolder mHolder;
+
+        public BusinessCard(String name, String appKey, ViewHolder holder) {
+            this.userName = name;
+            this.appKey = appKey;
+            this.mHolder = holder;
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (mHolder.ll_businessCard != null && v.getId() == mHolder.ll_businessCard.getId()) {
+                JMessageClient.getUserInfo(userName, new GetUserInfoCallback() {
+                    @Override
+                    public void gotResult(int i, String s, UserInfo userInfo) {
+                        Intent intent = new Intent();
+                        if (i == 0) {
+                            if (userInfo.isFriend()) {
+                                intent.setClass(mContext, FriendInfoActivity.class);
+                            } else {
+                                intent.setClass(mContext, GroupNotFriendActivity.class);
+                            }
+                            intent.putExtra(ImsApplication.TARGET_APP_KEY, appKey);
+                            intent.putExtra(ImsApplication.TARGET_ID, userName);
+                            intent.putExtra("fromSearch", true);
+                            mContext.startActivity(intent);
+                        }else {
+                            ToastUtil.shortToast(mContext, "获取信息失败,稍后重试");
+                        }
+                    }
+                });
+            }
+
+        }
+    }
 
     public void handleTextMsg(final Message msg, final ViewHolder holder, int position) {
         final String content = ((TextContent) msg.getContent()).getText();
@@ -233,6 +397,13 @@ public class ChatItemController {
             }
             // 发送图片方，直接加载缩略图
         } else {
+//            try {
+//                setPictureScale(path, holder.picture);
+//                Picasso.with(mContext).load(new File(path)).into(holder.picture);
+//            } catch (NullPointerException e) {
+//                Picasso.with(mContext).load(IdHelper.getDrawable(mContext, "jmui_picture_not_found"))
+//                        .into(holder.picture);
+//            }
             //检查状态
             switch (msg.getStatus()) {
                 case created:
@@ -707,7 +878,6 @@ public class ChatItemController {
     }
 
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public void handleFileMsg(final Message msg, final ViewHolder holder, int position) {
         final FileContent content = (FileContent) msg.getContent();
         if (holder.txtContent != null) {
@@ -774,10 +944,11 @@ public class ChatItemController {
                     }
                     if (!msg.isSendCompleteCallbackExists()) {
                         msg.setOnSendCompleteCallback(new BasicCallback() {
-                            @TargetApi(Build.VERSION_CODES.LOLLIPOP)
                             @Override
                             public void gotResult(int status, String desc) {
-                                holder.contentLl.setBackground(mContext.getDrawable(R.drawable.jmui_msg_send_bg));
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                    holder.contentLl.setBackground(mContext.getDrawable(R.drawable.jmui_msg_send_bg));
+                                }
                                 holder.progressTv.setVisibility(View.GONE);
                                 if (status == 803008) {
                                     CustomContent customContent = new CustomContent();
@@ -793,7 +964,9 @@ public class ChatItemController {
                     break;
                 case send_success:
                     holder.text_receipt.setVisibility(View.VISIBLE);
-                    holder.contentLl.setBackground(mContext.getDrawable(R.drawable.jmui_msg_send_bg));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        holder.contentLl.setBackground(mContext.getDrawable(R.drawable.jmui_msg_send_bg));
+                    }
                     holder.alreadySend.setVisibility(View.VISIBLE);
                     holder.progressTv.setVisibility(View.GONE);
                     holder.resend.setVisibility(View.GONE);
@@ -802,7 +975,9 @@ public class ChatItemController {
                     holder.alreadySend.setVisibility(View.VISIBLE);
                     holder.alreadySend.setText("发送失败");
                     holder.text_receipt.setVisibility(View.GONE);
-                    holder.contentLl.setBackground(mContext.getDrawable(R.drawable.jmui_msg_send_bg));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        holder.contentLl.setBackground(mContext.getDrawable(R.drawable.jmui_msg_send_bg));
+                    }
                     holder.progressTv.setVisibility(View.GONE);
                     holder.resend.setVisibility(View.VISIBLE);
                     break;
@@ -822,7 +997,9 @@ public class ChatItemController {
                                     holder.progressTv.setText(progressStr);
                                 } else {
                                     holder.progressTv.setVisibility(View.GONE);
-                                    holder.contentLl.setBackground(mContext.getDrawable(R.drawable.jmui_msg_receive_bg));
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                        holder.contentLl.setBackground(mContext.getDrawable(R.drawable.jmui_msg_receive_bg));
+                                    }
                                 }
 
                             }
@@ -831,16 +1008,14 @@ public class ChatItemController {
                     break;
                 case receive_fail://收到文件没下载也是这个状态
                     holder.progressTv.setVisibility(View.GONE);
-                    //开始是用的下面这行设置但是部分手机会崩溃
-                    //mContext.getDrawable(R.drawable.jmui_msg_receive_bg)
-                    //如果用上面的报错 NoSuchMethodError 就把setBackground后面参数换成下面的
-                    //ContextCompat.getDrawable(mContext, R.drawable.jmui_msg_receive_bg)
                     holder.contentLl.setBackground(ContextCompat.getDrawable(mContext, R.drawable.jmui_msg_receive_bg));
                     holder.fileLoad.setText("未下载");
                     break;
                 case receive_success:
                     holder.progressTv.setVisibility(View.GONE);
-                    holder.contentLl.setBackground(mContext.getDrawable(R.drawable.jmui_msg_receive_bg));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        holder.contentLl.setBackground(mContext.getDrawable(R.drawable.jmui_msg_receive_bg));
+                    }
                     holder.fileLoad.setText("已下载");
                     break;
             }
@@ -869,7 +1044,9 @@ public class ChatItemController {
                             @Override
                             public void onComplete(int status, String desc, File file) {
                                 holder.progressTv.setVisibility(View.GONE);
-                                holder.contentLl.setBackground(mContext.getDrawable(R.drawable.jmui_msg_receive_bg));
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                    holder.contentLl.setBackground(mContext.getDrawable(R.drawable.jmui_msg_receive_bg));
+                                }
                                 if (status != 0) {
                                     holder.fileLoad.setText("未下载");
                                     Toast.makeText(mContext, R.string.download_file_failed,
@@ -1017,13 +1194,14 @@ public class ChatItemController {
                         intent.putExtra(ImsApplication.TARGET_ID, mConv.getTargetId());
                         intent.putExtra("msgId", msg.getId());
                         if (mConv.getType() == ConversationType.group) {
-
+                            GroupInfo groupInfo = (GroupInfo) mConv.getTargetInfo();
+                            intent.putExtra(ImsApplication.GROUP_ID, groupInfo.getGroupID());
                         }
                         intent.putExtra(ImsApplication.TARGET_APP_KEY, mConv.getTargetAppKey());
                         intent.putExtra("msgCount", mMsgList.size());
                         intent.putIntegerArrayListExtra(ImsApplication.MsgIDs, getImgMsgIDList());
                         intent.putExtra("fromChatActivity", true);
-//                        intent.setClass(mContext, BrowserViewPagerActivity.class);
+                        intent.setClass(mContext, BrowserViewPagerActivity.class);
                         mContext.startActivity(intent);
                     }
                     break;

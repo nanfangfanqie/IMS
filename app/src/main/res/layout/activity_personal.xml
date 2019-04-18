@@ -7,7 +7,7 @@
               android:fitsSystemWindows="true"
               android:orientation="vertical">
 
-    <include layout="@layout/toolbar"/>
+    <include layout="@layout/menu_title_bar_with_button"/>
 
 
     <ImageView
@@ -38,6 +38,7 @@
         android:background="#FFE8EDF3"/>
 
     <RelativeLayout
+            style="@style/SettingItemStyle"
         android:id="@+id/rl_nickName"
         android:layout_marginTop="1dp"
         android:background="#fff">

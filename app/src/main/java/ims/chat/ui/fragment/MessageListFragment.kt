@@ -1,7 +1,6 @@
 package ims.chat.ui.fragment
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +8,7 @@ import android.view.ViewGroup
 import ims.chat.R
 import ims.chat.adapter.MessageAdapter
 import ims.chat.entity.Message
+import kotlinx.android.synthetic.main.contact_list_header.*
 import kotlinx.android.synthetic.main.list_frag.*
 
 import java.util.ArrayList
@@ -17,17 +17,11 @@ import java.util.ArrayList
  * @author yangchen
  * on 3/12/2019 12:03 AM
  */
-class MessageListFragment : Fragment() {
+class MessageListFragment : BaseFragment() {
     private lateinit var messageAdapter: MessageAdapter
-
     private val msgs: List<Message>
         get() {
-            val messageList = ArrayList<Message>()
-            for (i in 0..29) {
-                val message = Message("很长很长很长很长很长很长很长很长很长的消息$i")
-                messageList.add(message)
-            }
-            return messageList
+            return ArrayList()
         }
 
     /**
@@ -35,10 +29,6 @@ class MessageListFragment : Fragment() {
      */
     private fun refresh() {
         val messageList = ArrayList<Message>()
-        for (i in 0..29) {
-            val message = Message("不那么长的消息$i")
-            messageList.add(message)
-        }
         messageAdapter.setMessageList(messageList)
         rcyViewMsg.adapter = messageAdapter
     }
@@ -47,11 +37,10 @@ class MessageListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val layoutManager = LinearLayoutManager(activity)
         rcyViewMsg.layoutManager = layoutManager
+        verify_ll.visibility = View.GONE
         messageAdapter = MessageAdapter(msgs)
         rcyViewMsg.adapter = messageAdapter
         swipeToRefresh.setOnRefreshListener {
-            //模拟发送网络请求
-            //停止刷新
             swipeToRefresh.isRefreshing = false
             refresh()
         }

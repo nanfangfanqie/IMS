@@ -7,6 +7,10 @@
             android:name="${applicationId}.permission.JPUSH_MESSAGE"
             android:protectionLevel="signature"/>
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA"/>
+
+
     <uses-permission android:name="ims.chat.permission.JPUSH_MESSAGE"/>
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT"/>
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -14,9 +18,9 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" tools:ignore="ProtectedPermissions"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" tools:ignore="ProtectedPermissions"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission
             android:name="android.permission.ACCESS_WIFI_STATE"/> <!-- Optional. Required for location feature -->
@@ -27,6 +31,8 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.GET_TASKS"/>
+
+
     <uses-permission
             android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
             tools:ignore="ProtectedPermissions"/>
@@ -121,6 +127,8 @@
         <meta-data
                 android:name="JPUSH_APPKEY"
                 android:value="561589b93039fc4d77ebd73d"/>
+
+
         <activity android:name=".ui.activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -128,18 +136,50 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name=".ui.activity.BrowserViewPagerActivity"/>
         <activity android:name=".ui.activity.WebActivity"/>
         <activity android:name=".ui.activity.NewsActivity"/>
         <activity android:name=".ui.activity.RobotChatActivity"/>
-        <activity android:name=".ui.activity.PersonalInfoActivity"/>
         <activity android:name=".ui.activity.ConfigActivity"/>
         <activity android:name=".ui.activity.LoginActivity"/>
         <activity android:name=".ui.activity.MainActivity"/>
         <activity android:name=".ui.activity.FinishRegisterActivity"/>
+        <activity android:name=".ui.activity.SearchForAddFriendActivity"/>
+        <activity android:name=".ui.activity.SearchFriendInfoActivity"/>
+        <activity android:name=".ui.activity.FriendRecommendActivity"/>
+        <activity android:name=".ui.activity.VerificationActivity"/>
+        <activity android:name=".ui.activity.ChatActivity"/>
+        <activity android:name=".ui.activity.NotFriendSettingActivity"/>
+        <activity android:name=".ui.activity.GroupNotFriendActivity"/>
+        <activity android:name=".ui.activity.SearchFriendDetailActivity"/>
+        <activity android:name=".activity.SignActivity"/>
+        <activity android:name=".ui.activity.FriendInfoActivity"/>
+        <activity android:name=".ui.activity.ChatDetailActivity"/>
+        <activity android:name=".ui.activity.FriendSettingActivity"/>
+        <activity android:name=".ui.activity.SetNoteNameActivity"/>
+        <activity android:name=".ui.activity.PersonalActivity"/>
+        <activity android:name=".utils.pickerimage.PickImageActivity"/>
+        <activity android:name=".utils.photovideo.takevideo.CameraActivity"/>
+        <activity android:name=".ui.activity.DownLoadActivity"/>
+        <activity android:name=".baidu.IDCardActivity"/>
+        <activity android:name=".baidu.OCRActivity"/>
+
+
+
         <provider
                 android:name="com.activeandroid.content.ContentProvider"
                 android:authorities="${applicationId}"
                 android:exported="false" />
+
+        <provider
+                android:authorities="${applicationId}.provider"
+                android:name=".ImagePickerProvider"
+                android:exported="false"
+                android:grantUriPermissions="true">
+            <meta-data
+                    android:name="android.support.FILE_PROVIDER_PATHS"
+                    android:resource="@xml/provider_paths"/>
+        </provider>
     </application>
 
 </manifest>

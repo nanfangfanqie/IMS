@@ -15,10 +15,6 @@ import ims.chat.utils.ToastUtil;
 
 import java.io.File;
 
-/**
- * Created by ${chenyn} on 2017/3/3.
- */
-
 public class ChoosePhoto {
     public PhotoUtils photoUtils;
     private BottomMenuDialog mDialog;

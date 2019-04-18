@@ -1,12 +1,10 @@
 package ims.chat.ui.activity
 
 import android.Manifest
-import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.text.Editable
@@ -24,6 +22,7 @@ import ims.chat.utils.ThreadUtil
 import ims.chat.utils.photochoose.ChoosePhoto
 import ims.chat.utils.photochoose.PhotoUtils
 import ims.chat.utils.photochoose.SelectableRoundedImageView
+import kotlinx.android.synthetic.main.activity_finish_register.*
 
 import java.io.File
 
@@ -39,8 +38,8 @@ class FinishRegisterActivity : BaseActivity() {
 
 
     private val listener = View.OnClickListener { view ->
-        when (view.id) {
-            R.id.mine_header -> if (ContextCompat.checkSelfPermission(
+        when (view) {
+            mine_header -> if (ContextCompat.checkSelfPermission(
                     this@FinishRegisterActivity,
                     Manifest.permission.CAMERA
                 ) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(
@@ -52,12 +51,11 @@ class FinishRegisterActivity : BaseActivity() {
             } else {
                 mChoosePhoto!!.showPhotoDialog(this@FinishRegisterActivity)
             }
-            R.id.iv_back -> finish()
-            R.id.finish_btn -> {
+            iv_back -> finish()
+            finish_btn -> {
                 mDialog = ProgressDialog(this@FinishRegisterActivity)
                 mDialog!!.setCancelable(false)
                 mDialog!!.show()
-
                 val userId = SharePreferenceManager.getRegistrName()
                 val password = SharePreferenceManager.getRegistrPass()
                 SharePreferenceManager.setRegisterUsername(userId)
@@ -72,9 +70,7 @@ class FinishRegisterActivity : BaseActivity() {
                                 user = UserEntry(username, appKey)
                                 user.save()
                             }
-
                             val nickName = mNickNameEt!!.text.toString()
-
                             val myUserInfo = JMessageClient.getMyInfo()
                             if (myUserInfo != null) {
                                 myUserInfo.nickname = nickName
@@ -87,6 +83,7 @@ class FinishRegisterActivity : BaseActivity() {
                                     mDialog!!.dismiss()
                                     if (status == 0) {
                                         MainActivity.actionStart(this@FinishRegisterActivity)
+                                        finish()
                                     }
                                 }
                             })
@@ -131,7 +128,6 @@ class FinishRegisterActivity : BaseActivity() {
         mIv_back!!.setOnClickListener(listener)
         SharePreferenceManager.setCachedFixProfileFlag(true)
         mNickNameEt!!.requestFocus()
-
         SharePreferenceManager.setRegisterAvatarPath(null)
         mChoosePhoto = ChoosePhoto()
         mChoosePhoto!!.setPortraitChangeListener(this@FinishRegisterActivity, mAvatarIv, 1)
@@ -176,8 +172,6 @@ class FinishRegisterActivity : BaseActivity() {
     }
 
     companion object {
-        private val OUTPUT_X = 720
-        private val OUTPUT_Y = 720
         private val MAX_COUNT = 30
     }
 }

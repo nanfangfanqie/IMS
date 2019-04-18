@@ -107,4 +107,7 @@ dependencies {
     implementation 'com.nbsp:library:1.8'
     //选择器
     implementation 'com.airbnb.android:lottie:2.2.0'
+
+    implementation files('libs/ocr-sdk.jar')
+    implementation project(path: ':ocr_ui')
 }

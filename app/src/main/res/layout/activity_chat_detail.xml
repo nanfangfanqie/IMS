@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ims.chat.view.ChatDetailView android:id="@+id/chat_detail_view"
+<ims.chat.ui.view.ChatDetailView android:id="@+id/chat_detail_view"
                                   xmlns:android="http://schemas.android.com/apk/res/android"
                                   android:layout_width="match_parent"
                                   android:layout_height="match_parent"
@@ -27,7 +27,7 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <ims.chat.view.GroupGridView
+                <ims.chat.ui.view.GroupGridView
                     android:id="@+id/chat_detail_group_gv"
                     android:layout_width="match_parent"
                     android:layout_height="47.33dp"
@@ -183,7 +183,7 @@
                     style="@style/ChatDetailItemHit"
                     android:text="@string/set_do_not_disturb"/>
 
-                <ims.chat.view.SlipButton
+                <ims.chat.ui.view.SlipButton
                     android:id="@+id/no_disturb_slip_btn"
                     android:layout_width="46dp"
                     android:layout_height="25dp"
@@ -207,7 +207,7 @@
                     style="@style/ChatDetailItemHit"
                     android:text="@string/set_to_block"/>
 
-                <ims.chat.view.SlipButton
+                <ims.chat.ui.view.SlipButton
                     android:id="@+id/block_slip_btn"
                     android:layout_width="46dp"
                     android:layout_height="25dp"
@@ -328,7 +328,7 @@
                     android:layout_height="40dp"
                     android:layout_marginLeft="14dp"
                     android:layout_marginRight="14dp"
-                    android:background="@drawable/blue_btn_selector"
+                    android:background="@color/colorPrimary"
                     android:text="添加好友"
                     android:textColor="@drawable/blue_text_selector"
                     android:textSize="16sp"/>
@@ -359,4 +359,4 @@
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
-</ims.chat.view.ChatDetailView>
+</ims.chat.ui.view.ChatDetailView>

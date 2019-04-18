@@ -12,6 +12,14 @@
         <item name="android:windowBackground">@color/windows_color</item>
     </style>
 
+    <style name="result_pop_scroll">
+        <item name="android:background">@color/colorWhite</item>
+    </style>
+    <style name="result_pop_scrollinner">
+        <item name="android:padding">@dimen/result_pop_padding</item>
+        <item name="android:rowHeight">12dp</item>
+    </style>
+
     <style name="loading_dialog" parent="android:style/Theme.Dialog">
         <item name="android:windowFrame">@null</item>
         <item name="android:windowNoTitle">true</item>
@@ -307,23 +315,23 @@
     </style>
 
     <style name="AppBaseTheme" parent="@android:style/Theme.Light.NoTitleBar">
-        <item name="android:statusBarColor">#FF2DD0CF</item>
+        <item name="android:statusBarColor">@color/colorPrimary</item>
         <item name="android:windowNoTitle">true</item>
     </style>
 
     <!--这里有个需要注意的地方就是,自定义的弹窗需要自定义一个theme否则系统会默认给设置padding自己设置的属性不生效
     statusBarColor这个属性可以改变系统状态栏颜色-->
     <style name="BaseTheme" parent="@android:style/Theme.Light.NoTitleBar">
-        <item name="android:statusBarColor">#FF2DD0CF</item>
+        <item name="android:statusBarColor">@color/colorPrimary</item>
         <item name="android:windowNoTitle">true</item>
     </style>
     <style name="WelcomeStyle" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowBackground">@drawable/loading</item>
+        <item name="android:windowBackground">@drawable/qipao</item>
         <item name="android:windowNoTitle">true</item>
     </style>
 
     <style name="BaseThemes" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:statusBarColor">#FF2DD0CF</item>
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
         <item name="android:windowNoTitle">true</item>
     </style>
     <style name="SearchTheme" parent="Theme.AppCompat.Light.NoActionBar">

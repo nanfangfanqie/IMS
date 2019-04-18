@@ -7,7 +7,7 @@
     <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/title_bar_height"
-            android:background="@color/jmui_jpush_blue">
+            android:background="@color/colorPrimary">
         <ImageView
                 android:id="@+id/iv_back"
                 android:layout_width="40dp"
@@ -110,12 +110,12 @@
     <Button
             android:id="@+id/finish_btn"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="30dip"
             android:layout_marginRight="30dip"
             android:layout_marginTop="20dip"
-            android:background="@color/blue_btn_normal"
+            android:background="@color/colorPrimary"
             android:text="完成"
-            android:textColor="@drawable/blue_text_selector"
+            android:textColor="@color/white"
             android:textSize="16sp"/>
 </LinearLayout>

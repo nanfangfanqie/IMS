@@ -35,29 +35,6 @@
         android:background="#fff"
         android:orientation="vertical">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="sendBusinessCard">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12sp"
-                android:layout_marginLeft="14dp"
-                android:layout_marginTop="12sp"
-                android:text="发送名片"
-                android:textColor="#2C2C2C"
-                android:textSize="16sp"/>
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="14dp"
-                android:src="@drawable/arrow"/>
-        </RelativeLayout>
 
         <View
             android:layout_width="match_parent"
@@ -73,7 +50,7 @@
                 style="@style/info_left_style"
                 android:text="加入黑名单"/>
 
-            <ims.chat.view.SlipButton
+            <ims.chat.ui.view.SlipButton
                 android:id="@+id/btn_addBlackList"
                 android:layout_width="46dp"
                 android:layout_height="25dp"

@@ -17,10 +17,8 @@ import ims.chat.ui.activity.MainActivity
 import ims.chat.utils.*
 import kotlinx.android.synthetic.main.input_form.*
 
-
 @Suppress("DEPRECATION")
 class LoginController(private val mContext: LoginActivity) : View.OnClickListener {
-
     override fun onClick(v: View?) {
         when (v!!.id) {
             R.id.btnSubmit -> {
@@ -82,7 +80,7 @@ class LoginController(private val mContext: LoginActivity) : View.OnClickListene
                                         user.save()
                                     }
                                     MainActivity.actionStart(mContext)
-
+                                    mContext.finish()
                                 } else {
                                     ToastUtil.shortToast(mContext, "登陆失败$responseMessage")
                                 }
@@ -98,7 +96,7 @@ class LoginController(private val mContext: LoginActivity) : View.OnClickListene
                                 mContext.startActivity(Intent(mContext, FinishRegisterActivity::class.java))
                                 ToastUtil.shortToast(mContext, "注册成功")
                             } else {
-                                HandleResponseCode.onHandle(mContext, i, false)
+                                ToastUtil.shortToast(mContext, "用户已存在");
                             }
                         }
                     })

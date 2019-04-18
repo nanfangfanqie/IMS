@@ -73,7 +73,7 @@ public abstract class AbstractWheelTextAdapter extends AbstractWheelAdapter {
      * Constructor
      *
      * @param context      the current context
-     * @param itemResource the resource ID for a layout file containing a TextView to use when instantiating items views
+     * @param itemResource the resource IDCard for a layout file containing a TextView to use when instantiating items views
      */
     protected AbstractWheelTextAdapter(Context context, int itemResource) {
         this(context, itemResource, NO_RESOURCE);
@@ -83,8 +83,8 @@ public abstract class AbstractWheelTextAdapter extends AbstractWheelAdapter {
      * Constructor
      *
      * @param context          the current context
-     * @param itemResource     the resource ID for a layout file containing a TextView to use when instantiating items views
-     * @param itemTextResource the resource ID for a text view in the item layout
+     * @param itemResource     the resource IDCard for a layout file containing a TextView to use when instantiating items views
+     * @param itemTextResource the resource IDCard for a text view in the item layout
      */
     protected AbstractWheelTextAdapter(Context context, int itemResource, int itemTextResource) {
         this.context = context;
@@ -260,9 +260,9 @@ public abstract class AbstractWheelTextAdapter extends AbstractWheelAdapter {
                 text = (TextView) view.findViewById(textResource);
             }
         } catch (ClassCastException e) {
-            Log.e("AbstractWheelAdapter", "You must supply a resource ID for a TextView");
+            Log.e("AbstractWheelAdapter", "You must supply a resource IDCard for a TextView");
             throw new IllegalStateException(
-                    "AbstractWheelAdapter requires the resource ID to be a TextView", e);
+                    "AbstractWheelAdapter requires the resource IDCard to be a TextView", e);
         }
 
         return text;

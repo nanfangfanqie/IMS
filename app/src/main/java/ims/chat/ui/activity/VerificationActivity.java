@@ -20,9 +20,6 @@ import ims.chat.model.InfoModel;
 import ims.chat.utils.DialogCreator;
 import ims.chat.utils.ToastUtil;
 
-/**
- * Created by ${chenyn} on 2017/3/14.
- */
 
 public class VerificationActivity extends IBaseActivity {
 
@@ -35,7 +32,6 @@ public class VerificationActivity extends IBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verification);
-
         initView();
         initData();
     }
@@ -64,25 +60,24 @@ public class VerificationActivity extends IBaseActivity {
         String displayName;
         String targetAvatar;
         Long targetUid;
-        if (getIntent().getFlags() == 1) {
-            //添加好友申请时对方信息
-            userName = getIntent().getStringExtra("detail_add_friend");
-            displayName = getIntent().getStringExtra("detail_add_nick_name");
-            targetAvatar = getIntent().getStringExtra("detail_add_avatar_path");
-            targetUid = getIntent().getLongExtra("detail_add_uid", 0);
-            if (TextUtils.isEmpty(displayName)) {
-                displayName = userName;
-            }
-            //搜索方式添加好友
-        } else {
-            targetAvatar = InfoModel.getInstance().getAvatarPath();
-            displayName = InfoModel.getInstance().getNickName();
-            targetUid = InfoModel.getInstance().getUid();
-            if (TextUtils.isEmpty(displayName)) {
-                displayName = InfoModel.getInstance().getUserName();
-            }
-            userName = InfoModel.getInstance().getUserName();
+//            //添加好友申请时对方信息
+//            userName = getIntent().getStringExtra("detail_add_friend");
+//            displayName = getIntent().getStringExtra("detail_add_nick_name");
+//            targetAvatar = getIntent().getStringExtra("detail_add_avatar_path");
+//            targetUid = getIntent().getLongExtra("detail_add_uid", 0);
+//            if (TextUtils.isEmpty(displayName)) {
+//                displayName = userName;
+//            }
+//            //搜索方式添加好友
+//        } else {
+
+        targetAvatar = InfoModel.getInstance().getAvatarPath();
+        displayName = InfoModel.getInstance().getNickName();
+        targetUid = InfoModel.getInstance().getUid();
+        if (TextUtils.isEmpty(displayName)) {
+            displayName = InfoModel.getInstance().getUserName();
         }
+        userName = InfoModel.getInstance().getUserName();
         final String reason = mEt_reason.getText().toString();
         final String finalTargetAvatar = targetAvatar;
         final String finalDisplayName = displayName;
@@ -121,23 +116,13 @@ public class VerificationActivity extends IBaseActivity {
         mMyInfo = JMessageClient.getMyInfo();
         mTargetAppKey = mMyInfo.getAppKey();
         String name;
-        //群组详细信息点击非好友头像,跳转到此添加界面
-        if (getIntent().getFlags() == 1) {
-            name = getIntent().getStringExtra("detail_add_friend_my_nickname");
-            if (TextUtils.isEmpty(name)) {
-                mEt_reason.setText("我是");
-            } else {
-                mEt_reason.setText("我是" + name);
-            }
-            //搜索用户发送添加申请
-        } else {
+        //群组详细信息点击非好友头像,跳转到此添加界面else {
             name = mMyInfo.getNickname();
             if (TextUtils.isEmpty(name)) {
                 mEt_reason.setText("我是");
             } else {
                 mEt_reason.setText("我是" + name);
             }
-        }
-
+        initTitle(true, true, "验证信息", "", true, "保存");
     }
 }

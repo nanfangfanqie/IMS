@@ -73,7 +73,7 @@ public class XhsEmoticonsKeyBoard extends AutoHeightLayout implements View.OnCli
         mBtnSend = ((Button) findViewById(R.id.btn_send));
         mLyKvml = ((FuncLayout) findViewById(R.id.ly_kvml));
 
-//        mBtnVoiceOrText.setOnClickListener(this);
+        mBtnVoiceOrText.setOnClickListener(this);
         mBtnFace.setOnClickListener(this);
         mBtnMultimedia.setOnClickListener(this);
         mEtChat.setOnBackKeyClickListener(this);
@@ -236,7 +236,7 @@ public class XhsEmoticonsKeyBoard extends AutoHeightLayout implements View.OnCli
     @Override
     public void onClick(View v) {
         int i = v.getId();
-        /*if (i == R.id.btn_voice_or_text) {
+        if (i == R.id.btn_voice_or_text) {
             if (mRlInput.isShown()) {
                 mBtnVoiceOrText.setImageResource(R.drawable.btn_voice_or_text_keyboard);
                 showVoice();
@@ -245,7 +245,7 @@ public class XhsEmoticonsKeyBoard extends AutoHeightLayout implements View.OnCli
                 mBtnVoiceOrText.setImageResource(R.drawable.btn_voice_or_text);
                 EmoticonsKeyboardUtils.openSoftKeyboard(mEtChat);
             }
-        } else*/ if (i == R.id.btn_face) {
+        } else if (i == R.id.btn_face) {
             toggleFuncView(FUNC_TYPE_EMOTION);
         } else if (i == R.id.btn_multimedia) {
             toggleFuncView(FUNC_TYPE_APPPS);

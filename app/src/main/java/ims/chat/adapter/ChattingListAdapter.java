@@ -32,9 +32,9 @@ import cn.jpush.im.android.api.options.MessageSendingOptions;
 import cn.jpush.im.api.BasicCallback;
 import ims.chat.R;
 import ims.chat.application.ImsApplication;
-import ims.chat.ui.controller.ChatItemController;
 import ims.chat.ui.activity.FriendInfoActivity;
 import ims.chat.ui.activity.PersonalActivity;
+import ims.chat.ui.controller.ChatItemController;
 import ims.chat.utils.DialogCreator;
 import ims.chat.utils.HandleResponseCode;
 import ims.chat.utils.TimeFormat;
@@ -76,7 +76,10 @@ public class ChattingListAdapter extends BaseAdapter {
     private Context mContext;
     private int mWidth;
     private Conversation mConv;
-    private List<Message> mMsgList = new ArrayList<Message>();//所有消息列表
+    /**
+     * 所有消息列表
+     */
+    private List<Message> mMsgList = new ArrayList<Message>();
     private int mOffset = PAGE_MESSAGE_COUNT;
     private ContentLongClickListener mLongClickListener;
     //当前第0项消息的位置
@@ -339,39 +342,39 @@ public class ChattingListAdapter extends BaseAdapter {
     }
 
 
-//    @Override
-//    public int getItemViewType(int position) {
-//        Message msg = mMsgList.get(position);
-//        //是文字类型或者自定义类型（用来显示群成员变化消息）
-//        switch (msg.getContentType()) {
-//            case text:
-//                return msg.getDirect() == MessageDirect.send ? TYPE_SEND_TXT
-//                        : TYPE_RECEIVE_TXT;
-//            case image:
-//                return msg.getDirect() == MessageDirect.send ? TYPE_SEND_IMAGE
-//                        : TYPE_RECEIVER_IMAGE;
-//            case file:
-//                String extra = msg.getContent().getStringExtra("video");
-//                if (!TextUtils.isEmpty(extra)) {
-//                    return msg.getDirect() == MessageDirect.send ? TYPE_SEND_VIDEO
-//                            : TYPE_RECEIVE_VIDEO;
-//                } else {
-//                    return msg.getDirect() == MessageDirect.send ? TYPE_SEND_FILE
-//                            : TYPE_RECEIVE_FILE;
-//                }
-//            case voice:
-//                return msg.getDirect() == MessageDirect.send ? TYPE_SEND_VOICE
-//                        : TYPE_RECEIVER_VOICE;
-//            case location:
-//                return msg.getDirect() == MessageDirect.send ? TYPE_SEND_LOCATION
-//                        : TYPE_RECEIVER_LOCATION;
-//            case eventNotification:
-//            case prompt:
-//                return TYPE_GROUP_CHANGE;
-//            default:
-//                return TYPE_CUSTOM_TXT;
-//        }
-//    }
+    @Override
+    public int getItemViewType(int position) {
+        Message msg = mMsgList.get(position);
+        //是文字类型或者自定义类型（用来显示群成员变化消息）
+        switch (msg.getContentType()) {
+            case text:
+                return msg.getDirect() == MessageDirect.send ? TYPE_SEND_TXT
+                        : TYPE_RECEIVE_TXT;
+            case image:
+                return msg.getDirect() == MessageDirect.send ? TYPE_SEND_IMAGE
+                        : TYPE_RECEIVER_IMAGE;
+            case file:
+                String extra = msg.getContent().getStringExtra("video");
+                if (!TextUtils.isEmpty(extra)) {
+                    return msg.getDirect() == MessageDirect.send ? TYPE_SEND_VIDEO
+                            : TYPE_RECEIVE_VIDEO;
+                } else {
+                    return msg.getDirect() == MessageDirect.send ? TYPE_SEND_FILE
+                            : TYPE_RECEIVE_FILE;
+                }
+            case voice:
+                return msg.getDirect() == MessageDirect.send ? TYPE_SEND_VOICE
+                        : TYPE_RECEIVER_VOICE;
+            case location:
+                return msg.getDirect() == MessageDirect.send ? TYPE_SEND_LOCATION
+                        : TYPE_RECEIVER_LOCATION;
+            case eventNotification:
+            case prompt:
+                return TYPE_GROUP_CHANGE;
+            default:
+                return TYPE_CUSTOM_TXT;
+        }
+    }
 
     @Override
     public int getViewTypeCount() {
@@ -635,7 +638,7 @@ public class ChattingListAdapter extends BaseAdapter {
                 }
                 holder.text_receipt.setTextColor(mContext.getResources().getColor(R.color.message_already_receipt));
             } else {
-                holder.text_receipt.setTextColor(mContext.getResources().getColor(R.color.message_no_receipt));
+                holder.text_receipt.setTextColor(mContext.getResources().getColor(R.color.colorPrimary));
                 if (msg.getTargetType() == ConversationType.group) {
                 } else if (!((UserInfo) msg.getTargetInfo()).getUserName().equals(JMessageClient.getMyInfo().getUserName())) {
                     holder.text_receipt.setText("未读");

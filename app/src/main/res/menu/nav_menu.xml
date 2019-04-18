@@ -14,9 +14,9 @@
         />
 
         <item
-                android:id="@+id/navSettings"
+                android:id="@+id/ocr"
                 android:icon="@drawable/settings"
-                android:title="nav3"
+                android:title="OCR工具"
         />
 
         <item

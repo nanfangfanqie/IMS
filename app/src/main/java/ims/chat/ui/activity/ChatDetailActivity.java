@@ -17,6 +17,7 @@ import cn.jpush.im.android.api.event.MessageEvent;
 import cn.jpush.im.android.api.model.GroupInfo;
 import cn.jpush.im.android.api.model.UserInfo;
 import ims.chat.R;
+import ims.chat.activity.SignActivity;
 import ims.chat.application.ImsApplication;
 import ims.chat.ui.controller.ChatDetailController;
 import ims.chat.ui.view.ChatDetailView;
@@ -55,7 +56,6 @@ public class ChatDetailActivity extends IBaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_detail);
         mContext = this;
@@ -66,7 +66,6 @@ public class ChatDetailActivity extends IBaseActivity {
         mChatDetailView.setOnChangeListener(mChatDetailController);
         mChatDetailView.setItemListener(mChatDetailController);
     }
-
 
     @Override
     public void onBackPressed() {
@@ -93,7 +92,7 @@ public class ChatDetailActivity extends IBaseActivity {
 
     public void updateGroupNameDesc(long groupId, int nameOrDesc) {
         this.groupID = groupId;
-        Intent intent = new Intent(ChatDetailActivity.this, NickSignActivity.class);
+        Intent intent = new Intent(ChatDetailActivity.this, SignActivity.class);
         if (nameOrDesc == 1) {
             intent.setFlags(FLAGS_GROUP_NAME);
             intent.putExtra("group_name", mGroupName);

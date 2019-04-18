@@ -7,12 +7,16 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 import android.util.Log;
 import ims.chat.utils.CommonUtils;
+import ims.chat.utils.imagepicker.util.ProviderUtil;
 
 import java.io.File;
+import java.net.URL;
 import java.util.List;
 
 
@@ -58,13 +62,15 @@ public class PhotoUtils {
         try {
             //每次选择图片吧之前的图片删除
             clearCropFile(buildUri(activity));
-
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, buildUri(activity));
+//            intent.putExtra(MediaStore.EXTRA_OUTPUT, buildUri(activity));
+            Uri uri = buildUri(activity);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
             if (!isIntentAvailable(activity, intent)) {
                 return;
             }
+
             activity.startActivityForResult(intent, INTENT_TAKE);
         } catch (Exception e) {
             e.printStackTrace();
@@ -103,10 +109,24 @@ public class PhotoUtils {
      * @return
      */
     private Uri buildUri(Activity activity) {
+        boolean version = (Build.VERSION.SDK_INT <= Build.VERSION_CODES.M);
         if (CommonUtils.INSTANCE.checkSDCard()) {
-            return Uri.fromFile(Environment.getExternalStorageDirectory()).buildUpon().appendPath(CROP_FILE_NAME).build();
+            if (version){
+                return Uri.fromFile(Environment.getExternalStorageDirectory()).buildUpon().appendPath(CROP_FILE_NAME).build();
+            }else{
+                File cameraPhoto = new File(CROP_FILE_NAME);
+                Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                Uri photoUri = FileProvider.getUriForFile(activity, "ims.chat" + ".provider", cameraPhoto);
+                return photoUri;
+
+//                return  FileProvider.getUriForFile(activity, ProviderUtil.getFileProviderName(activity), Environment.getExternalStorageDirectory()).buildUpon().appendPath(CROP_FILE_NAME).build();
+            }
         } else {
-            return Uri.fromFile(activity.getCacheDir()).buildUpon().appendPath(CROP_FILE_NAME).build();
+            if (version){
+                return Uri.fromFile(activity.getCacheDir()).buildUpon().appendPath(CROP_FILE_NAME).build();
+            }else {
+                return FileProvider.getUriForFile(activity, ProviderUtil.getFileProviderName(activity), activity.getCacheDir()).buildUpon().appendPath(CROP_FILE_NAME).build();
+            }
         }
     }
 
