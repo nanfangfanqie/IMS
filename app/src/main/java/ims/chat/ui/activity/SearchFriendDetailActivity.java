@@ -31,7 +31,7 @@ import java.util.Date;
  * Created by ${chenyn} on 2017/3/21.
  */
 
-public class SearchFriendDetailActivity extends IBaseActivity {
+public class SearchFriendDetailActivity extends BaseActivity {
 
     private ImageView mIv_friendPhoto;
     private TextView mTv_nickName;

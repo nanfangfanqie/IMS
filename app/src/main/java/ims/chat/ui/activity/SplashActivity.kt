@@ -33,51 +33,46 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.splash_activity)
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            val window = window;
+            val window = window
             window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
             window.statusBarColor = Color.TRANSPARENT;
-
         }
-
         init()
     }
-
     override fun onBackPressed() {
         super.onBackPressed()
         //返回取消计时
         timer.cancel()
     }
-
     private fun init() {
         swpRefresh.setOnRefreshListener {
-            loadBingPic(bingPic)
+            loadSplashPic(splashPic)
         }
         val pic = getSharedPreferences("bing_pic", Context.MODE_PRIVATE).getString("bing_pic",null)
         if(null!=pic){
-            Glide.with(this).load(pic).into(bingPic);
+            Glide.with(this).load(pic).into(splashPic);
         }else{
-            loadBingPic(bingPic);
+            loadSplashPic(splashPic);
         }
         Handler().postDelayed({requestPermissions()},3000)
-
     }
 
     /**
      * 加载必应每日一图
      */
-    private fun loadBingPic(imageView: ImageView) {
+    private fun loadSplashPic(imageView: ImageView) {
         val api = "http:guolin.tech/api/bing_pic"
         HttpUtil.sendOkHttpRequest(api,object: Callback {
             override fun onFailure(call: Call, e: IOException) {
                 e.printStackTrace()
             }
             override fun onResponse(call: Call, response: Response) {
-                val bingPic = response.body()!!.string()
+                val splashPic = response.body()!!.string()
                 val editor = PreferenceManager.getDefaultSharedPreferences(this@SplashActivity).edit()
-                editor.putString("bing_pic",bingPic);
+                editor.putString("bing_pic",splashPic);
                 editor.apply();
                 runOnUiThread {
-                    Glide.with(this@SplashActivity).load(bingPic).into(imageView)
+                    Glide.with(this@SplashActivity).load(splashPic).into(imageView)
                 }
             }
         })

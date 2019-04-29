@@ -18,7 +18,7 @@ import java.util.List;
  * Created by ${chenyn} on 2017/9/26.
  */
 
-public class NotFriendSettingActivity extends IBaseActivity implements SlipButton.OnChangedListener{
+public class NotFriendSettingActivity extends BaseActivity implements SlipButton.OnChangedListener{
     private UserInfo mUserInfo;
     private SlipButton mBtn_addBlackList;
     private String mUserName;

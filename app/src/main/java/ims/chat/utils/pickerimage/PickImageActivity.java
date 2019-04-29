@@ -168,7 +168,6 @@ public class PickImageActivity extends UIView {
         Cursor cursor = getContentResolver()
                 .query(uri, new String[] {MediaStore.Images.Media.DATA}, null, null, null);
         if (cursor == null) {
-            // miui 2.3 有可能为null
             return uri.getPath();
         } else {
             if (uri.toString().contains("content://com.android.providers.media.documents/document/image")) { // htc 某些手机

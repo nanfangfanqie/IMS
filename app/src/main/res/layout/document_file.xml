@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ims.chat.view.listview.StickyListHeadersListView
+        <ims.chat.utils.listview.StickyListHeadersListView
             android:id="@+id/document_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

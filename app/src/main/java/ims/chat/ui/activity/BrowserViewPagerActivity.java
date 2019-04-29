@@ -2,11 +2,14 @@ package ims.chat.ui.activity;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.*;
+import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Looper;
 import android.provider.MediaStore;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -17,23 +20,16 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.*;
-import cn.jpush.im.android.api.JMessageClient;
-import cn.jpush.im.android.api.callback.DownloadCompletionCallback;
-import cn.jpush.im.android.api.callback.ProgressUpdateCallback;
-import cn.jpush.im.android.api.content.ImageContent;
-import cn.jpush.im.android.api.enums.ContentType;
-import cn.jpush.im.android.api.model.Conversation;
-import cn.jpush.im.android.api.model.Message;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.ImageButton;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.squareup.picasso.Picasso;
-import ims.chat.R;
-import ims.chat.application.ImsApplication;
-import ims.chat.ui.view.ImgBrowserViewPager;
-import ims.chat.ui.view.PhotoView;
-import ims.chat.utils.BitmapLoader;
-import ims.chat.utils.NativeImageLoader;
-import ims.chat.utils.pickerimage.utils.AttachmentStore;
-import ims.chat.utils.pickerimage.utils.StorageUtil;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
@@ -41,9 +37,28 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.callback.DownloadCompletionCallback;
+import cn.jpush.im.android.api.callback.ProgressUpdateCallback;
+import cn.jpush.im.android.api.content.ImageContent;
+import cn.jpush.im.android.api.enums.ContentType;
+import cn.jpush.im.android.api.model.Conversation;
+import cn.jpush.im.android.api.model.Message;
+import ims.chat.R;
+import ims.chat.application.ImsApplication;
+import ims.chat.ui.activity.BaseActivity;
+import ims.chat.ui.view.ImgBrowserViewPager;
+import ims.chat.ui.view.PhotoView;
+import ims.chat.utils.BitmapLoader;
+import ims.chat.utils.DialogCreator;
+import ims.chat.utils.NativeImageLoader;
+import ims.chat.utils.pickerimage.utils.AttachmentStore;
+import ims.chat.utils.pickerimage.utils.StorageUtil;
+
+
 
 //用于浏览图片
-public class BrowserViewPagerActivity extends IBaseActivity {
+public class BrowserViewPagerActivity extends BaseActivity {
 
     private static String TAG = BrowserViewPagerActivity.class.getSimpleName();
     private PhotoView photoView;
@@ -204,7 +219,7 @@ public class BrowserViewPagerActivity extends IBaseActivity {
             if (path != null) {
                 File file = new File(path);
                 if (file.exists()) {
-                    Bitmap bitmap = BitmapLoader.getBitmapFromFile(path, mWidth,mHeight);
+                    Bitmap bitmap = BitmapLoader.getBitmapFromFile(path, mWidth, mHeight);
                     if (bitmap != null) {
                         photoView.setMaxScale(9);
                         photoView.setImageBitmap(bitmap);
@@ -224,8 +239,6 @@ public class BrowserViewPagerActivity extends IBaseActivity {
                 photoView.setImageResource(R.drawable.jmui_picture_not_found);
             }
             container.addView(photoView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-            //图片长按保存到手机
-//            onImageViewFound(photoView, path);
             return photoView;
         }
 
@@ -252,31 +265,7 @@ public class BrowserViewPagerActivity extends IBaseActivity {
 
     };
 
-    // 保存图片
-    public void savePicture(String path, Dialog dialog) {
-        if (TextUtils.isEmpty(path)) {
-            return;
-        }
 
-        String picPath = StorageUtil.getSystemImagePath();
-        String dstPath = picPath + path;
-        if (AttachmentStore.copy(path, dstPath) != -1) {
-            try {
-                ContentValues values = new ContentValues(2);
-                values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
-                values.put(MediaStore.Images.Media.DATA, dstPath);
-                getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-                Toast.makeText(mContext, getString(R.string.picture_save_to), Toast.LENGTH_LONG).show();
-                dialog.dismiss();
-            } catch (Exception e) {
-                dialog.dismiss();
-                Toast.makeText(mContext, getString(R.string.picture_save_fail), Toast.LENGTH_LONG).show();
-            }
-        } else {
-            dialog.dismiss();
-            Toast.makeText(mContext, getString(R.string.picture_save_fail), Toast.LENGTH_LONG).show();
-        }
-    }
 
     private void setLoadBtnText(ImageContent ic) {
         NumberFormat ddf1 = NumberFormat.getNumberInstance();
@@ -401,31 +390,31 @@ public class BrowserViewPagerActivity extends IBaseActivity {
      * 滑动到当前页图片的第一张时，加载上一页消息中的图片
      */
     private void getImgMsg() {
-        ImageContent ic;
-        final int msgSize = mMsgIdList.size();
-        List<Message> msgList = mConv.getMessagesFromNewest(mStart, mOffset);
-        mOffset = msgList.size();
-        if (mOffset > 0) {
-            for (Message msg : msgList) {
-                if (msg.getContentType().equals(ContentType. image)) {
-                    mMsgIdList.add(0, msg.getId());
-                    ic = (ImageContent) msg.getContent();
-                    if (!TextUtils.isEmpty(ic.getLocalPath())) {
-                        mPathList.add(0, ic.getLocalPath());
-                    } else {
-                        mPathList.add(0, ic.getLocalThumbnailPath());
-                    }
-                }
-            }
-            mStart += mOffset;
-            if (msgSize == mMsgIdList.size()) {
-                getImgMsg();
-            } else {
-                //加载完上一页图片后，设置当前图片仍为加载前的那一张图片
-                mPosition = mMsgIdList.size() - msgSize;
-                mUIHandler.sendMessage(mUIHandler.obtainMessage(SET_CURRENT_POSITION, mPosition));
-            }
-        }
+//        ImageContent ic;
+//        final int msgSize = mMsgIdList.size();
+//        List<Message> msgList = mConv.getMessagesFromNewest(mStart, mOffset);
+//        mOffset = msgList.size();
+//        if (mOffset > 0) {
+//            for (Message msg : msgList) {
+//                if (msg.getContentType().equals(ContentType.image)) {
+//                    mMsgIdList.add(0, msg.getId());
+//                    ic = (ImageContent) msg.getContent();
+//                    if (!TextUtils.isEmpty(ic.getLocalPath())) {
+//                        mPathList.add(0, ic.getLocalPath());
+//                    } else {
+//                        mPathList.add(0, ic.getLocalThumbnailPath());
+//                    }
+//                }
+//            }
+//            mStart += mOffset;
+//            if (msgSize == mMsgIdList.size()) {
+//                getImgMsg();
+//            } else {
+//                //加载完上一页图片后，设置当前图片仍为加载前的那一张图片
+//                mPosition = mMsgIdList.size() - msgSize;
+//                mUIHandler.sendMessage(mUIHandler.obtainMessage(SET_CURRENT_POSITION, mPosition));
+//            }
+//        }
     }
 
     /**
@@ -763,10 +752,10 @@ public class BrowserViewPagerActivity extends IBaseActivity {
                         activity.mLoadBtn.setVisibility(View.GONE);
                         break;
                     case INIT_ADAPTER:
-//                        activity.mViewPager.setAdapter(activity.pagerAdapter);
-//                        activity.mViewPager.addOnPageChangeListener(activity.onPageChangeListener);
-//                        activity.initCurrentItem();
-//                        break;
+                        activity.mViewPager.setAdapter(activity.pagerAdapter);
+                        activity.mViewPager.addOnPageChangeListener(activity.onPageChangeListener);
+                        activity.initCurrentItem();
+                        break;
                     case SET_CURRENT_POSITION:
                         if (activity.mViewPager != null && activity.mViewPager.getAdapter() != null) {
                             activity.mViewPager.getAdapter().notifyDataSetChanged();

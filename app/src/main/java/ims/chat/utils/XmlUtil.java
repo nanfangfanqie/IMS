@@ -34,6 +34,11 @@ public class XmlUtil {
         return null;
     }
 
+    /**
+     * 从SD卡获取xml文件
+     * @param filePath
+     * @return
+     */
     public InputStream getXmlFromSD(String filePath) {
         try {
             File file = new File(filePath);

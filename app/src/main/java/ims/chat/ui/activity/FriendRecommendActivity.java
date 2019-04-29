@@ -14,7 +14,7 @@ import ims.chat.entity.FriendInvitation;
 import java.util.List;
 
 
-public class FriendRecommendActivity extends IBaseActivity {
+public class FriendRecommendActivity extends BaseActivity {
 
     private ListView mListView;
     private FriendRecommendAdapter mAdapter;
@@ -49,10 +49,10 @@ public class FriendRecommendActivity extends IBaseActivity {
                 int btnState = data.getIntExtra("btn_state", -1);
                 FriendRecommendEntry entry = mList.get(position);
                 if (btnState == 2) {
-                    entry.state = FriendInvitation.ACCEPTED.getValue();
+                    entry.state = (FriendInvitation.ACCEPTED.getValue());
                     entry.save();
                 }else if (btnState == 1) {
-                    entry.state = FriendInvitation.REFUSED.getValue();
+                    entry.state = (FriendInvitation.REFUSED.getValue());
                     entry.save();
                 }
                 break;

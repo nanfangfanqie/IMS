@@ -13,7 +13,7 @@ import ims.chat.model.InfoModel;
  * Created by ${chenyn} on 2017/3/14.
  */
 
-public class SearchFriendInfoActivity extends IBaseActivity implements View.OnClickListener {
+public class SearchFriendInfoActivity extends BaseActivity implements View.OnClickListener {
 
     private ImageView mIv_photo;
     private TextView mTv_nickName;

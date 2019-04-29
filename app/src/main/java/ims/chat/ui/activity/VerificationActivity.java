@@ -21,7 +21,7 @@ import ims.chat.utils.DialogCreator;
 import ims.chat.utils.ToastUtil;
 
 
-public class VerificationActivity extends IBaseActivity {
+public class VerificationActivity extends BaseActivity {
 
     private EditText mEt_reason;
     private UserInfo mMyInfo;
@@ -60,16 +60,6 @@ public class VerificationActivity extends IBaseActivity {
         String displayName;
         String targetAvatar;
         Long targetUid;
-//            //添加好友申请时对方信息
-//            userName = getIntent().getStringExtra("detail_add_friend");
-//            displayName = getIntent().getStringExtra("detail_add_nick_name");
-//            targetAvatar = getIntent().getStringExtra("detail_add_avatar_path");
-//            targetUid = getIntent().getLongExtra("detail_add_uid", 0);
-//            if (TextUtils.isEmpty(displayName)) {
-//                displayName = userName;
-//            }
-//            //搜索方式添加好友
-//        } else {
 
         targetAvatar = InfoModel.getInstance().getAvatarPath();
         displayName = InfoModel.getInstance().getNickName();
@@ -96,7 +86,7 @@ public class VerificationActivity extends IBaseActivity {
                         entry = new FriendRecommendEntry(finalUid, userName, "", finalDisplayName, mTargetAppKey,
                                 finalTargetAvatar, finalDisplayName, reason, FriendInvitation.INVITING.getValue(), userEntry, 100);
                     } else {
-                        entry.state = FriendInvitation.INVITING.getValue();
+                        entry.state  = FriendInvitation.INVITING.getValue();
                         entry.reason = reason;
                     }
                     entry.save();

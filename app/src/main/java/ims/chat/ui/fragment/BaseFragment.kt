@@ -14,8 +14,8 @@ import cn.jpush.im.android.api.event.LoginStateChangeEvent
 import cn.jpush.im.android.api.model.UserInfo
 import cn.jpush.im.api.BasicCallback
 import ims.chat.R
-import ims.chat.ui.activity.LoginActivity
 import ims.chat.ui.activity.MainActivity
+import ims.chat.ui.activity.LoginActivity
 import ims.chat.utils.FileHelper
 import ims.chat.utils.SharePreferenceManager
 
@@ -23,10 +23,11 @@ import ims.chat.utils.SharePreferenceManager
  * @author yangchen
  * on 2019/3/10 22:58
  */
+@Suppress("DEPRECATION")
 open class BaseFragment : Fragment() {
     private val myInfo: UserInfo? = null
      var mDensity: Float = 0.toFloat()
-     var mDensityDpi: Int = 0
+     private var mDensityDpi: Int = 0
      var mWidth: Int = 0
      var mHeight: Int = 0
      var mRatio: Float = 0.toFloat()
@@ -66,7 +67,7 @@ open class BaseFragment : Fragment() {
         }
         when (reason) {
             LoginStateChangeEvent.Reason.user_logout -> {
-                val listener = View.OnClickListener { v ->
+                View.OnClickListener { v ->
                     when (v.id) {
                         R.id.jmui_cancel_btn -> {
                             val intent = Intent(mContext, LoginActivity::class.java)
@@ -118,5 +119,4 @@ open class BaseFragment : Fragment() {
             return fragment
         }
     }
-
 }

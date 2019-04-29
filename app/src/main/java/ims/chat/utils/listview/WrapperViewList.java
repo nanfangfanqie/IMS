@@ -12,7 +12,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WrapperViewList extends ListView {
+class WrapperViewList extends ListView {
 
 	interface LifeCycleListener {
 		void onDispatchDrawOccurred(Canvas canvas);
@@ -107,7 +107,7 @@ public class WrapperViewList extends ListView {
 		mLifeCycleListener.onDispatchDrawOccurred(canvas);
 	}
 
-	public void setLifeCycleListener(LifeCycleListener lifeCycleListener) {
+	void setLifeCycleListener(LifeCycleListener lifeCycleListener) {
 		mLifeCycleListener = lifeCycleListener;
 	}
 
@@ -139,18 +139,18 @@ public class WrapperViewList extends ListView {
 		return false;
 	}
 
-	public boolean containsFooterView(View v) {
+	boolean containsFooterView(View v) {
 		if (mFooterViews == null) {
 			return false;
 		}
 		return mFooterViews.contains(v);
 	}
 
-	public void setTopClippingLength(int topClipping) {
+	void setTopClippingLength(int topClipping) {
 		mTopClippingLength = topClipping;
 	}
 
-	public int getFixedFirstVisibleItem() {
+	int getFixedFirstVisibleItem() {
 		int firstVisibleItem = getFirstVisiblePosition();
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			return firstVisibleItem;

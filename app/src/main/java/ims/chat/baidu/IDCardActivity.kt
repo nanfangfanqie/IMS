@@ -5,6 +5,7 @@ package ims.chat.baidu
 
 import android.Manifest
 import android.app.Activity
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -14,7 +15,6 @@ import android.provider.MediaStore
 import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
-import android.text.ClipboardManager
 import android.text.TextUtils
 import android.view.View
 import android.widget.TextView
@@ -60,8 +60,6 @@ class IDCardActivity : AppCompatActivity() {
         infoTextView = findViewById<View>(R.id.info_text_view) as TextView
         toolbar.title = "身份证识别"
 
-        //  初始化本地质量控制模型,释放代码在onDestory中
-        //  调用身份证扫描必须加上 intent.putExtra(CameraActivity.KEY_NATIVE_MANUAL, true); 关闭自动初始化和释放本地模型
         CameraNativeHelper.init(
             this, OCR.getInstance(this).license
         ) { errorCode, e ->
@@ -232,7 +230,6 @@ class IDCardActivity : AppCompatActivity() {
             val cm =  getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager;
         // 将文本内容放到系统剪贴板里。
             cm.text = message;
-//            Toast.makeText(this, "复制成功，可以发给朋友们了。", Toast.LENGTH_LONG).show();
             alertDialog!!.setTitle(title)
                 .setMessage(message)
                 .setPositiveButton("确定", null)

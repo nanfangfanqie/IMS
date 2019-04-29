@@ -22,7 +22,7 @@ import ims.chat.utils.photochoose.SelectableRoundedImageView;
 
 import java.io.File;
 
-public class SearchForAddFriendActivity extends IBaseActivity implements View.OnClickListener {
+public class SearchForAddFriendActivity extends BaseActivity implements View.OnClickListener {
 
     private EditText mEt_searchUser;
     private Button mBtn_search;

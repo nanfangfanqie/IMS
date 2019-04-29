@@ -35,7 +35,7 @@ import ims.chat.utils.photochoose.PhotoUtils;
  * Created by ${chenyn} on 2017/2/23.
  */
 
-public class PersonalActivity extends IBaseActivity implements SelectAddressInterface, View.OnClickListener {
+public class PersonalActivity extends BaseActivity implements SelectAddressInterface, View.OnClickListener {
 
     public static final int SIGN = 1;
     public static final int FLAGS_SIGN = 2;
@@ -71,7 +71,6 @@ public class PersonalActivity extends IBaseActivity implements SelectAddressInte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal);
-
         initView();
         initListener();
         initData();
@@ -127,7 +126,6 @@ public class PersonalActivity extends IBaseActivity implements SelectAddressInte
         mSign.setOnClickListener(this);
         mRl_nickName.setOnClickListener(this);
         mIv_photo.setOnClickListener(this);
-        mRl_zxing.setOnClickListener(this);
     }
 
     private void initView() {
@@ -144,8 +142,6 @@ public class PersonalActivity extends IBaseActivity implements SelectAddressInte
         mTv_nickName = (TextView) findViewById(R.id.tv_nickName);
         mIv_photo = (ImageView) findViewById(R.id.iv_photo);
         mTv_userName = (TextView) findViewById(R.id.tv_userName);
-        mRl_zxing = (RelativeLayout) findViewById(R.id.rl_zxing);
-
         mChoosePhoto = new ChoosePhoto();
         mChoosePhoto.setPortraitChangeListener(PersonalActivity.this, mIv_photo, 2);
 
@@ -235,16 +231,6 @@ public class PersonalActivity extends IBaseActivity implements SelectAddressInte
                         PersonalActivity.this, SelectAddressDialog.STYLE_THREE, null, mMyInfo);
                 dialog.showDialog();
                 break;
-//            case R.id.rl_zxing:
-//                //二维码
-//                Intent intent = new Intent(PersonalActivity.this, Person2CodeActivity.class);
-//                intent.putExtra("appkey", mMyInfo.getAppKey());
-//                intent.putExtra("username", mMyInfo.getUserName());
-//                if (mMyInfo.getAvatarFile() != null) {
-//                    intent.putExtra("avatar", mMyInfo.getAvatarFile().getAbsolutePath());
-//                }
-//                startActivity(intent);
-//                break;
             default:
                 break;
         }

@@ -8,12 +8,22 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Checkable;
+import android.widget.ListAdapter;
 
 import java.util.LinkedList;
 import java.util.List;
 
 
-public class AdapterWrapper extends BaseAdapter implements StickyListHeadersAdapter {
+/**
+ * A {@link ListAdapter} which wraps a {@link StickyListHeadersAdapter} and
+ * automatically handles wrapping the result of
+ * {@link StickyListHeadersAdapter#getView(int, View, ViewGroup)}
+ * and
+ * {@link StickyListHeadersAdapter#getHeaderView(int, View, ViewGroup)}
+ * appropriately.
+ *
+ */
+class AdapterWrapper extends BaseAdapter implements StickyListHeadersAdapter {
 
 	interface OnHeaderClickListener {
 		void onHeaderClick(View header, int itemPosition, long headerId);
@@ -141,7 +151,7 @@ public class AdapterWrapper extends BaseAdapter implements StickyListHeadersAdap
 		return null;
 	}
 
-	/** Returns {@code true} if the previous position has the same header IDCard. */
+	/** Returns {@code true} if the previous position has the same header ID. */
 	private boolean previousPositionHasSameHeader(int position) {
 		return position != 0
 				&& mDelegate.getHeaderId(position) == mDelegate

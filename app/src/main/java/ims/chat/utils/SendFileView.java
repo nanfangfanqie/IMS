@@ -46,7 +46,7 @@ public class SendFileView extends RelativeLayout {
         }
         mIVArray[0].setVisibility(VISIBLE);
         mBtnArray[0].setTextColor(getResources().getColor(R.color.colorPrimary));
-        mSendBtn = (Button) findViewById(R.id.send_file_btn);
+//        mSendBtn = (Button) findViewById(R.id.send_file_btn);
         mTotalSize = (TextView) findViewById(R.id.size_desc);
     }
 

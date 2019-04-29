@@ -75,50 +75,6 @@
             android:layout_marginRight="13.93dp"
             android:background="@drawable/arrow"/>
     </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="14dp"
-        android:layout_marginRight="14dp"
-        android:background="#FFE8EDF3"/>
-
-    <RelativeLayout
-        android:id="@+id/rl_zxing"
-        style="@style/SettingItemStyle"
-        android:layout_marginTop="1dp"
-        android:background="#fff">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="14dp"
-            android:src="@drawable/erweima"/>
-
-        <TextView
-            style="@style/info_left_txt_style"
-            android:text="二维码"/>
-
-        <ImageView
-            android:id="@+id/iv_arrow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="13.93dp"
-            android:background="@drawable/arrow"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="我的二维码"
-            android:textColor="#FF999999"
-            android:textSize="14sp"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/iv_arrow"/>
-    </RelativeLayout>
-
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"

@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.widget.TextView;
 
 public class UnderlineTextView extends TextView {
@@ -27,7 +28,7 @@ public class UnderlineTextView extends TextView {
 
     private void init(Context context, AttributeSet attrs) {
         Resources r = getResources();
-//        mUnderlineHeight = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, r.getDisplayMetrics());
+        mUnderlineHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, r.getDisplayMetrics());
     }
 
     @Override
@@ -38,7 +39,6 @@ public class UnderlineTextView extends TextView {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
         // Draw the underline the same color as the text
         mPaint.setColor(getTextColors().getDefaultColor());
         canvas.drawRect(0, getHeight() - mUnderlineHeight, getWidth(), getHeight(), mPaint);

@@ -13,21 +13,22 @@ import android.widget.LinearLayout
 import android.widget.TextView
 
 import ims.chat.R
+import ims.chat.ui.activity.BaseActivity
 import ims.chat.ui.activity.ChatDetailActivity
-import ims.chat.ui.activity.IBaseActivity
 import ims.chat.ui.activity.PersonalActivity
+import kotlinx.android.synthetic.main.menu_title_bar_with_button.*
 
 
-class SignActivity : IBaseActivity() {
+class SignActivity : BaseActivity() {
 
     private var mEd_sign: EditText? = null
     private var mTv_count: TextView? = null
     private var mLl_nickSign: LinearLayout? = null
-//    private var mJmui_commit_btn: Button? = null
+    private lateinit var mJmui_commit_btn: Button
     internal var input: Int = 0
 
      @SuppressLint("WrongConstant")
-     override fun onCreate(savedInstanceState: Bundle) {
+     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_nick_sign)
 
@@ -39,18 +40,12 @@ class SignActivity : IBaseActivity() {
         } else if (intent.flags == PersonalActivity.FLAGS_NICK) {
             initViewNick("修改昵称", NICK_COUNT)
             initData(NICK_COUNT)
-        } else if (intent.flags == ChatDetailActivity.FLAGS_GROUP_DESC) {
-            initViewSign("群描述", GROUP_DESC)
-            initData(GROUP_DESC)
-        } else if (intent.flags == ChatDetailActivity.FLAGS_GROUP_NAME) {
-            initViewNick("群名称", GROUP_NAME)
-            initData(GROUP_NAME)
         }
-        initListener(intent.getFlags())
+        initListener(intent.flags)
     }
 
     private fun initListener(flags: Int) {
-        mJmui_commit_btn!!.setOnClickListener {
+        jmui_commit_btn!!.setOnClickListener {
             val sign = mEd_sign!!.text.toString()
             val intent = Intent()
             if (flags == PersonalActivity.FLAGS_NICK) {//3
@@ -66,8 +61,7 @@ class SignActivity : IBaseActivity() {
 
             } else if (flags == ChatDetailActivity.FLAGS_GROUP_NAME) {//73
                 intent.putExtra(ChatDetailActivity.GROUP_NAME_KEY, sign)
-                setResult(ChatDetailActivity.GROUP_NAME, intent)//72
-
+                setResult(ChatDetailActivity.GROUP_NAME, intent)//72\
             }
             finish()
         }
@@ -94,19 +88,11 @@ class SignActivity : IBaseActivity() {
         mEd_sign = findViewById(R.id.ed_sign) as EditText
         mLl_nickSign = findViewById(R.id.ll_nickSign) as LinearLayout
         mTv_count = findViewById(R.id.tv_count) as TextView
-        this.mJmui_commit_btn = findViewById(R.id.jmui_commit_btn) as Button
-
-        if (intent.getStringExtra("group_name") != null) {
-            mEd_sign!!.setText(getIntent().getStringExtra("group_name"))
-        }
-        if (intent.getStringExtra("group_desc") != null) {
-            mEd_sign!!.setText(getIntent().getStringExtra("group_desc"))
-        }
         if (intent.getStringExtra("old_nick") != null) {
-            mEd_sign!!.setText(getIntent().getStringExtra("old_nick"))
+            mEd_sign!!.setText(intent.getStringExtra("old_nick"))
         }
         if (intent.getStringExtra("old_sign") != null) {
-            mEd_sign!!.setText(getIntent().getStringExtra("old_sign"))
+            mEd_sign!!.setText(intent.getStringExtra("old_sign"))
         }
 
         mEd_sign!!.setSelection(mEd_sign!!.text.length)
@@ -160,8 +146,5 @@ class SignActivity : IBaseActivity() {
     companion object {
         private const val SIGN_COUNT = 250
         private const val NICK_COUNT = 64
-
-        private const val GROUP_DESC = 250
-        private const val GROUP_NAME = 64
     }
 }

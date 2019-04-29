@@ -24,13 +24,12 @@ import ims.chat.utils.DialogCreator
 import ims.chat.utils.HandleResponseCode
 import ims.chat.utils.NativeImageLoader
 
-class FriendInfoActivity : IBaseActivity() {
+class FriendInfoActivity : BaseActivity() {
 
     private var mTargetId: String? = null
     var targetAppKey: String? = null
         private set
     private var mIsFromContact: Boolean = false
-
     private var mFriendInfoView: FriendInfoView? = null
     var userInfo: UserInfo? = null
         private set
@@ -60,9 +59,9 @@ class FriendInfoActivity : IBaseActivity() {
             targetAppKey = JMessageClient.getMyInfo().appKey
         }
         mFriendInfoView!!.initModel(this)
-        mFriendInfoController = FriendInfoController(mFriendInfoView, this)
-        mFriendInfoView!!.setListeners(mFriendInfoController)
-        mFriendInfoView!!.setOnChangeListener(mFriendInfoController)
+        mFriendInfoController = FriendInfoController(mFriendInfoView!!, this)
+        mFriendInfoView!!.setListeners(mFriendInfoController!!)
+        mFriendInfoView!!.setOnChangeListener(mFriendInfoController!!)
         mIsFromContact = intent.getBooleanExtra("fromContact", false)
         mIsFromSearch = intent.getBooleanExtra("fromSearch", false)
         mIsAddFriend = intent.getBooleanExtra("addFriend", false)
@@ -216,9 +215,13 @@ class FriendInfoActivity : IBaseActivity() {
         }
         if (resultCode == ImsApplication.RESULT_CODE_EDIT_NOTENAME) {
             mTitle = data.getStringExtra(ImsApplication.NOTENAME)
-            val friend = FriendEntry.getFriend(ImsApplication.getUserEntry(), mTargetId, targetAppKey)
+            val friend = mTargetId?.let { targetAppKey?.let { it1 ->
+                FriendEntry.getFriend(ImsApplication.getUserEntry(), it,
+                    it1
+                )
+            } }
             if (null != friend) {
-                friend.displayName = mTitle
+                friend.displayName = (mTitle as String?).toString()
                 friend.save()
             }
         }

@@ -6,7 +6,6 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.widget.Toolbar
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
@@ -43,7 +42,6 @@ class LoginActivity : BaseActivity(), View.OnClickListener, TextWatcher {
             progressDialog.setMessage("登陆成功")
             progressDialog.dismiss()
             finish()
-            MainActivity.actionStart(this@LoginActivity, user)
         }
 
         override fun onPreExecute() {
@@ -68,9 +66,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, TextWatcher {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_activity)
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        toolbar.setTitle(R.string.login)
-        setSupportActionBar(toolbar)
+        toolbar.title = "登录"
         init()
     }
 

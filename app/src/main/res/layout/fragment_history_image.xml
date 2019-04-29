@@ -5,7 +5,7 @@
                                  android:layout_height="match_parent"
                                  android:orientation="vertical">
 
-    <ims.chat.utils.historyfile.grideviewheader.StickyGridHeadersGridView
+    <ims.chat.utils.listview.StickyListHeadersListView
         android:id="@+id/asset_grid"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

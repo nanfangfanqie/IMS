@@ -31,7 +31,7 @@ public class TimeFormat {
         //最后一条消息的 年 月 日 时 分
         //yyyy-MM-dd HH:mm:ss
         Date date = new Date(mTimeStamp);
-        String dateStr = format(date, mContext.getString(R.string.jmui_time_format_accuracy));
+        String dateStr = format(date, mContext.getString(R.string.time_format_accuracy));
         String oldYear = dateStr.substring(0, 4);
         int oldMonth = Integer.parseInt(dateStr.substring(5, 7));
         int oldDay = Integer.parseInt(dateStr.substring(8, 10));
@@ -41,7 +41,7 @@ public class TimeFormat {
         //当前时间
         long today = JCoreInterface.getReportTime();//当前时间
         Date now = new Date(today * 1000);//当前时间
-        String nowStr = format(now, mContext.getString(R.string.jmui_time_format_accuracy));
+        String nowStr = format(now, mContext.getString(R.string.time_format_accuracy));
 
         String newYear = nowStr.substring(0, 4);
         int newMonth = Integer.parseInt(nowStr.substring(5, 7));
@@ -144,7 +144,7 @@ public class TimeFormat {
         //最后一条消息的 年 月 日 时 分
         //yyyy-MM-dd HH:mm:ss
         Date date = new Date(mTimeStamp);
-        String dateStr = format(date, mContext.getString(R.string.jmui_time_format_accuracy));
+        String dateStr = format(date, mContext.getString(R.string.time_format_accuracy));
         String oldYear = dateStr.substring(0, 4);
         int oldMonth = Integer.parseInt(dateStr.substring(5, 7));
         int oldDay = Integer.parseInt(dateStr.substring(8, 10));
@@ -154,7 +154,7 @@ public class TimeFormat {
         //当前时间
         long today = JCoreInterface.getReportTime();//当前时间
         Date now = new Date(today * 1000);//当前时间
-        String nowStr = format(now, mContext.getString(R.string.jmui_time_format_accuracy));
+        String nowStr = format(now, mContext.getString(R.string.time_format_accuracy));
 
         String newYear = nowStr.substring(0, 4);
         int newMonth = Integer.parseInt(nowStr.substring(5, 7));

@@ -7,10 +7,6 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- * Created by ${chenyn} on 2017/3/14.
- */
-
 public class InfoModel {
     public UserInfo friendInfo;
     public Bitmap bitmap;

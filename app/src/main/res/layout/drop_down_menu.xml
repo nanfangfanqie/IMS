@@ -14,16 +14,16 @@
 
         <LinearLayout
             android:id="@+id/send_message_ll"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/launch_single"
-            android:gravity="center">
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@color/colorPrimary"
+            android:gravity="left">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
                 android:layout_gravity="center_vertical"
-                android:layout_marginTop="2dp"
                 android:src="@drawable/create_singel"/>
 
             <TextView
@@ -32,73 +32,31 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="12dp"
                 android:layout_marginTop="2dp"
-                android:text="发起单聊"
-                android:textColor="#fff"
-                android:textSize="16sp"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/create_group_ll"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/launch_group"
-            android:gravity="center">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/create_group"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="12dp"
-                android:text="发起群聊"
+                android:text="发起聊天"
                 android:textColor="#fff"
                 android:textSize="16sp"/>
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/add_friend_with_confirm_ll"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/launch_friend"
-            android:gravity="center">
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@color/colorPrimary"
+            android:gravity="left">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_gravity="center_vertical"
                 android:src="@drawable/add_friend"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
                 android:layout_marginLeft="12dp"
+                android:layout_gravity="center_vertical"
                 android:text="添加好友"
-                android:textColor="#fff"
-                android:textSize="16sp"/>
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/ll_saoYiSao"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/launch_friend"
-            android:gravity="center">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/sys"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="12dp"
-                android:text="扫一扫    "
                 android:textColor="#fff"
                 android:textSize="16sp"/>
         </LinearLayout>

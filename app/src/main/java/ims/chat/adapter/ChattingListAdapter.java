@@ -345,7 +345,6 @@ public class ChattingListAdapter extends BaseAdapter {
     @Override
     public int getItemViewType(int position) {
         Message msg = mMsgList.get(position);
-        //是文字类型或者自定义类型（用来显示群成员变化消息）
         switch (msg.getContentType()) {
             case text:
                 return msg.getDirect() == MessageDirect.send ? TYPE_SEND_TXT
@@ -489,11 +488,6 @@ public class ChattingListAdapter extends BaseAdapter {
                     holder.voiceLength = (TextView) convertView.findViewById(R.id.jmui_voice_length_tv);
                     holder.readStatus = (ImageView) convertView.findViewById(R.id.jmui_read_status_iv);
                     break;
-                case location:
-                    holder.location = (TextView) convertView.findViewById(R.id.jmui_loc_desc);
-                    holder.picture = (ImageView) convertView.findViewById(R.id.jmui_picture_iv);
-                    holder.locationView = convertView.findViewById(R.id.location_view);
-                    break;
                 case custom:
                 case prompt:
                 case eventNotification:
@@ -595,7 +589,6 @@ public class ChattingListAdapter extends BaseAdapter {
                 if (extraBusiness != null) {
                     holder.txtContent.setVisibility(View.GONE);
                     holder.ll_businessCard.setVisibility(View.VISIBLE);
-//                    mController.handleBusinessCard(msg, holder, position);
                 } else {
                     holder.ll_businessCard.setVisibility(View.GONE);
                     holder.txtContent.setVisibility(View.VISIBLE);
@@ -616,9 +609,6 @@ public class ChattingListAdapter extends BaseAdapter {
                 break;
             case voice:
                 mController.handleVoiceMsg(msg, holder, position);
-                break;
-            case location:
-                mController.handleLocationMsg(msg, holder, position);
                 break;
             case eventNotification:
                 mController.handleGroupChangeMsg(msg, holder);
@@ -680,7 +670,7 @@ public class ChattingListAdapter extends BaseAdapter {
     private void resendTextOrVoice(final ViewHolder holder, Message msg) {
         holder.resend.setVisibility(View.GONE);
         holder.sendingIv.setVisibility(View.VISIBLE);
-        holder.sendingIv.startAnimation(mController.mSendingAnim);
+        holder.sendingIv.startAnimation(mController.getMSendingAnim());
 
         if (!msg.isSendCompleteCallbackExists()) {
             msg.setOnSendCompleteCallback(new BasicCallback() {
@@ -702,7 +692,7 @@ public class ChattingListAdapter extends BaseAdapter {
 
     private void resendImage(final ViewHolder holder, Message msg) {
         holder.sendingIv.setVisibility(View.VISIBLE);
-        holder.sendingIv.startAnimation(mController.mSendingAnim);
+        holder.sendingIv.startAnimation(mController.getMSendingAnim());
         holder.picture.setAlpha(0.75f);
         holder.resend.setVisibility(View.GONE);
         holder.progressTv.setVisibility(View.VISIBLE);
@@ -767,7 +757,6 @@ public class ChattingListAdapter extends BaseAdapter {
                     @Override
                     public void gotResult(final int status, String desc) {
                         holder.progressTv.setVisibility(View.GONE);
-                        //此方法是api21才添加的如果低版本会报错找不到此方法.升级api或者使用ContextCompat.getDrawable
                         holder.contentLl.setBackground(mContext.getDrawable(R.drawable.jmui_msg_send_bg));
                         if (status != 0) {
                             HandleResponseCode.onHandle(mContext, status, false);

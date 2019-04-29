@@ -18,7 +18,7 @@ public class WrapperView extends ViewGroup {
 	public View mItem;
 	Drawable mDivider;
 	int mDividerHeight;
-	public View mHeader;
+	View mHeader;
 	int mItemTop;
 
 	public WrapperView(Context c) {
@@ -93,14 +93,14 @@ public class WrapperView extends ViewGroup {
 						MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
 			}
 			measuredHeight += mHeader.getMeasuredHeight();
-		} else if (mDivider != null&&mItem.getVisibility()!= View.GONE) {
+		} else if (mDivider != null&&mItem.getVisibility()!=View.GONE) {
 			measuredHeight += mDividerHeight;
 		}
 		
 		//measure item
 		LayoutParams params = mItem.getLayoutParams();
         //enable hiding listview item,ex. toggle off items in group
-		if(mItem.getVisibility()== View.GONE){
+		if(mItem.getVisibility()==View.GONE){
             mItem.measure(childWidthMeasureSpec,
                     MeasureSpec.makeMeasureSpec(0, MeasureSpec.EXACTLY));
         }else if (params != null && params.height >= 0) {
@@ -143,7 +143,7 @@ public class WrapperView extends ViewGroup {
 	@Override
 	protected void dispatchDraw(Canvas canvas) {
 		super.dispatchDraw(canvas);
-		if (mHeader == null && mDivider != null&&mItem.getVisibility()!= View.GONE) {
+		if (mHeader == null && mDivider != null&&mItem.getVisibility()!=View.GONE) {
 			// Drawable.setBounds() does not seem to work pre-honeycomb. So have
 			// to do this instead
 			if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {

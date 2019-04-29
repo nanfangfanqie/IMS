@@ -1,29 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-          package="ims.chat">
-
-    <permission
-            android:name="${applicationId}.permission.JPUSH_MESSAGE"
-            android:protectionLevel="signature"/>
-
-    <uses-permission android:name="android.permission.INTERNET" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" package="ims.chat">
+    <permission android:name="${applicationId}.permission.JPUSH_MESSAGE" android:protectionLevel="signature"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.CAMERA"/>
-
-
-    <uses-permission android:name="ims.chat.permission.JPUSH_MESSAGE"/>
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="ims.chat.permission.JPUSH_MESSAGE"/>
     <uses-permission android:name="android.permission.WRITE_SETTINGS" tools:ignore="ProtectedPermissions"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" tools:ignore="ProtectedPermissions"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission
-            android:name="android.permission.ACCESS_WIFI_STATE"/> <!-- Optional. Required for location feature -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
@@ -31,11 +22,7 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.GET_TASKS"/>
-
-
-    <uses-permission
-            android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
-            tools:ignore="ProtectedPermissions"/>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" tools:ignore="ProtectedPermissions"/>
 
     <application
             android:name=".application.ImsApplication"
@@ -46,7 +33,6 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-
         <meta-data
                 android:name="AA_DB_NAME"
                 android:value="jchat.db"/>
@@ -57,8 +43,6 @@
         <meta-data
                 android:name="AA_DB_VERSION"
                 android:value="4"/>
-        <!-- Required SDK 核心功能 -->
-        <!-- 可配置android:process参数将PushService放在其他进程中 -->
         <service
                 android:name="cn.jpush.android.service.PushService"
                 android:enabled="true"
@@ -69,7 +53,8 @@
                 <action android:name="cn.jpush.android.intent.PushService"/>
                 <action android:name="cn.jpush.android.intent.PUSH_TIME"/>
             </intent-filter>
-        </service> <!-- Required SDK核心功能 -->
+        </service>
+
         <receiver
                 android:name="cn.jpush.android.service.PushReceiver"
                 android:enabled="true"
@@ -128,7 +113,6 @@
                 android:name="JPUSH_APPKEY"
                 android:value="561589b93039fc4d77ebd73d"/>
 
-
         <activity android:name=".ui.activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -157,29 +141,17 @@
         <activity android:name=".ui.activity.ChatDetailActivity"/>
         <activity android:name=".ui.activity.FriendSettingActivity"/>
         <activity android:name=".ui.activity.SetNoteNameActivity"/>
+        <activity android:name=".ui.activity.ResetPasswordActivity"/>
         <activity android:name=".ui.activity.PersonalActivity"/>
         <activity android:name=".utils.pickerimage.PickImageActivity"/>
         <activity android:name=".utils.photovideo.takevideo.CameraActivity"/>
         <activity android:name=".ui.activity.DownLoadActivity"/>
         <activity android:name=".baidu.IDCardActivity"/>
         <activity android:name=".baidu.OCRActivity"/>
-
-
-
+        <activity android:name=".ui.activity.BaseActivity"/>
         <provider
                 android:name="com.activeandroid.content.ContentProvider"
                 android:authorities="${applicationId}"
-                android:exported="false" />
-
-        <provider
-                android:authorities="${applicationId}.provider"
-                android:name=".ImagePickerProvider"
-                android:exported="false"
-                android:grantUriPermissions="true">
-            <meta-data
-                    android:name="android.support.FILE_PROVIDER_PATHS"
-                    android:resource="@xml/provider_paths"/>
-        </provider>
+                android:exported="false"/>
     </application>
-
 </manifest>

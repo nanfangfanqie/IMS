@@ -14,7 +14,7 @@ object ActivityController {
     /**
      * 存储活动的列表
      */
-    var activities: MutableList<Activity> = ArrayList()
+    private var activities: MutableList<Activity> = ArrayList()
 
     /**
      * 添加活动

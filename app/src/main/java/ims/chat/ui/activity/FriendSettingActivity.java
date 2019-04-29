@@ -33,7 +33,7 @@ import java.util.List;
  * Created by ${chenyn} on 2017/5/7.
  */
 
-public class FriendSettingActivity extends IBaseActivity implements SlipButton.OnChangedListener, View.OnClickListener {
+public class FriendSettingActivity extends BaseActivity implements SlipButton.OnChangedListener, View.OnClickListener {
 
     private RelativeLayout mSetNoteName;
     private SlipButton mBtn_addBlackList;

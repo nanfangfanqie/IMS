@@ -111,22 +111,9 @@ public class PhotoUtils {
     private Uri buildUri(Activity activity) {
         boolean version = (Build.VERSION.SDK_INT <= Build.VERSION_CODES.M);
         if (CommonUtils.INSTANCE.checkSDCard()) {
-            if (version){
-                return Uri.fromFile(Environment.getExternalStorageDirectory()).buildUpon().appendPath(CROP_FILE_NAME).build();
-            }else{
-                File cameraPhoto = new File(CROP_FILE_NAME);
-                Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                Uri photoUri = FileProvider.getUriForFile(activity, "ims.chat" + ".provider", cameraPhoto);
-                return photoUri;
-
-//                return  FileProvider.getUriForFile(activity, ProviderUtil.getFileProviderName(activity), Environment.getExternalStorageDirectory()).buildUpon().appendPath(CROP_FILE_NAME).build();
-            }
-        } else {
-            if (version){
-                return Uri.fromFile(activity.getCacheDir()).buildUpon().appendPath(CROP_FILE_NAME).build();
+            return Uri.fromFile(Environment.getExternalStorageDirectory()).buildUpon().appendPath(CROP_FILE_NAME).build();
             }else {
-                return FileProvider.getUriForFile(activity, ProviderUtil.getFileProviderName(activity), activity.getCacheDir()).buildUpon().appendPath(CROP_FILE_NAME).build();
-            }
+            return Uri.fromFile(activity.getCacheDir()).buildUpon().appendPath(CROP_FILE_NAME).build();
         }
     }
 

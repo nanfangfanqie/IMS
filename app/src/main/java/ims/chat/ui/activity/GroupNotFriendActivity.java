@@ -24,7 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
-public class GroupNotFriendActivity extends IBaseActivity implements View.OnClickListener {
+public class GroupNotFriendActivity extends BaseActivity implements View.OnClickListener {
 
     private ImageView mIv_friendPhoto;
     private TextView mTv_noteName;

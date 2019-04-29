@@ -35,8 +35,6 @@
     <string name="passwordDiff">两次密码输入不一致</string>
     <string name="assistant">聊天助手</string>
     <string name="watchNews">看新闻</string>
-
-
     <string name="change_user_btn">切换账号</string>
     <string name="registering_hint">注册中</string>
     <string name="register_failed_toast">注册失败</string>
@@ -162,7 +160,7 @@
     <string name="type_custom">[自定义消息]</string>
     <string name="hundreds_of_unread_msgs">..\.</string>
     <string name="jmui_time_format_year_month_day">yyyy年-MM月-dd日</string>
-    <string name="jmui_time_format_accuracy">yyyy-MM-dd HH:mm:ss</string>
+    <string name="time_format_accuracy">yyyy-MM-dd HH:mm:ss</string>
     <string name="jmui_time_format_hours">HH:mm</string>
     <string name="jmui_yesterday">昨天</string>
     <string name="jmui_before_yesterday">前天</string>
@@ -185,10 +183,8 @@
     <string name="jmui_sdcard_not_exist_toast">暂无外部存储</string>
     <string name="camera_not_prepared">摄像头尚未准备好</string>
     <string name="sdcard_not_prepare_toast">sdcard尚未准备好</string>
-
     <string name="select_friend_title">添加成员</string>
     <string name="selected_num">(%s)</string>
-
     <!-- 通讯录相关-->
     <string name="switch_to_friendless_mode">切换到无好友模式</string>
     <string name="switch_to_friend_mode">切换到好友模式</string>
@@ -206,7 +202,6 @@
     <string name="decline_friend_invitation">对方已拒绝</string>
     <string name="delete_friend_dialog_title">确定删除好友？</string>
     <string name="friend_already_deleted_hint">已移除好友</string>
-
     <!-- 发送文件 -->
     <string name="file">文件</string>
     <string name="document">文档</string>
@@ -220,7 +215,6 @@
     <string name="download_file_failed">下载失败</string>
     <string name="file_not_support_hint">无法打开该类型的文件</string>
     <string name="file_already_copy_hint">文件已保存到 sdcard/JChatDemo/recvFiles 目录下</string>
-
     <!--设置相关-->
     <string name="birthday">出生日期</string>
     <string name="sex">性别</string>

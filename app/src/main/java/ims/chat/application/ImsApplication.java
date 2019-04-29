@@ -90,8 +90,8 @@ public class ImsApplication extends com.activeandroid.app.Application {
     public static final String MEMBERS_COUNT = "membersCount";
 
     private static final String JCHAT_CONFIGS = "JChat_configs";
-    public static String FILE_DIR = "sdcard/JChatDemo/recvFiles/";
-    public static String VIDEO_DIR = "sdcarVIDEOd/JChatDemo/sendFiles/";
+    public static String FILE_DIR = "sdcard/ims/recvFiles/";
+    public static String VIDEO_DIR = "sdcard/video/ims/sendFiles/";
     public static final String ATUSER = "atuser";
     public static int maxImgCount;               //允许选择图片最大数
     public static final String GROUP_NAME = "groupName";

@@ -19,7 +19,7 @@ import ims.chat.utils.pinyin.HanyuPinyin;
  * Created by ${chenyn} on 2017/5/7.
  */
 
-public class SetNoteNameActivity extends IBaseActivity {
+public class SetNoteNameActivity extends BaseActivity {
 
     private EditText mNote_name;
     private Button mJmui_commit_btn;

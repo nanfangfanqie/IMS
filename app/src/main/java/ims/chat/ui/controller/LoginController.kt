@@ -12,8 +12,8 @@ import ims.chat.R
 import ims.chat.application.ImsApplication
 import ims.chat.database.UserEntry
 import ims.chat.ui.activity.FinishRegisterActivity
-import ims.chat.ui.activity.LoginActivity
 import ims.chat.ui.activity.MainActivity
+import ims.chat.ui.activity.LoginActivity
 import ims.chat.utils.*
 import kotlinx.android.synthetic.main.input_form.*
 
@@ -65,6 +65,7 @@ class LoginController(private val mContext: LoginActivity) : View.OnClickListene
                                 progressDialog.dismiss();
                                 if (responseCode == 0) {
                                     SharePreferenceManager.setCachedPsw(password)
+                                    SharePreferenceManager.setCachedUsername(userID)
                                     val userInfo: UserInfo = JMessageClient.getMyInfo()
                                     val avatarFile = userInfo.avatarFile
                                     if (avatarFile != null) {
@@ -79,7 +80,7 @@ class LoginController(private val mContext: LoginActivity) : View.OnClickListene
                                         user = UserEntry(username, appKey)
                                         user.save()
                                     }
-                                    MainActivity.actionStart(mContext)
+                                    mContext.goToActivity(mContext, MainActivity::class.java)
                                     mContext.finish()
                                 } else {
                                     ToastUtil.shortToast(mContext, "登陆失败$responseMessage")
