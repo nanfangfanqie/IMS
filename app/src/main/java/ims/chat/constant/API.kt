@@ -9,5 +9,7 @@ enum class API(val url: String) {
     TURNING("http://www.tuling123.com/openapi/api?"),
     LOGIN("/user/login"),
     REGISTER("/user/register"),
-    JMKEY("561589b93039fc4d77ebd73d")
+    JMKEY("561589b93039fc4d77ebd73d"),
+    VERIFY("/id/verify")
+
 }

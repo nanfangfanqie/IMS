@@ -6,8 +6,8 @@ package ims.chat.utils
  */
 object HttpConfig {
     const val SCHEMA = "http://"
-    var ip = "192.168.20.1"
-    var port = "80"
+    var ip = "10.0.55.18"
+    var port = "8080"
     val url: String
         get() = "$SCHEMA$ip:$port"
 }

@@ -55,9 +55,9 @@ object MessageDigetUtil {
     }
 }
 
-//fun main(args: Array<String>) {
-//    val input = "你好，世界，你好，世界，你好，世界"
-//    println(MessageDigetUtil.md5(input))
-//    println(MessageDigetUtil.sha1(input))
-//    println(MessageDigetUtil.sha256(input))
-//}
+fun main(args: Array<String>) {
+    val input = "321281199605041071"
+    println(MessageDigetUtil.md5(input))
+    println(MessageDigetUtil.sha1(input))
+    println(MessageDigetUtil.sha256(input))
+}

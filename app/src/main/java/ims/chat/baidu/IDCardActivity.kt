@@ -73,32 +73,7 @@ class IDCardActivity : AppCompatActivity() {
             infoTextView!!.text = "本地质量控制初始化错误，错误原因： $msg"
         }
 
-        findViewById<View>(R.id.gallery_button_front).setOnClickListener {
-            if (checkGalleryPermission()) {
-                val intent = Intent(Intent.ACTION_PICK)
-                intent.type = "image/*"
-                startActivityForResult(intent, REQUEST_CODE_PICK_IMAGE_FRONT)
-            }
-        }
 
-        findViewById<View>(R.id.gallery_button_back).setOnClickListener {
-            if (checkGalleryPermission()) {
-                val intent = Intent(Intent.ACTION_PICK)
-                intent.type = "image/*"
-                startActivityForResult(intent, REQUEST_CODE_PICK_IMAGE_BACK)
-            }
-        }
-
-        // 身份证正面拍照
-        findViewById<View>(R.id.id_card_front_button).setOnClickListener {
-            val intent = Intent(this@IDCardActivity, CameraActivity::class.java)
-            intent.putExtra(
-                CameraActivity.KEY_OUTPUT_FILE_PATH,
-                FileUtil.getSaveFile(application).absolutePath
-            )
-            intent.putExtra(CameraActivity.KEY_CONTENT_TYPE, CameraActivity.CONTENT_TYPE_ID_CARD_FRONT)
-            startActivityForResult(intent, REQUEST_CODE_CAMERA)
-        }
 
         // 身份证正面扫描
         findViewById<View>(R.id.id_card_front_button_native).setOnClickListener {
@@ -122,16 +97,6 @@ class IDCardActivity : AppCompatActivity() {
             startActivityForResult(intent, REQUEST_CODE_CAMERA)
         }
 
-        // 身份证反面拍照
-        findViewById<View>(R.id.id_card_back_button).setOnClickListener {
-            val intent = Intent(this@IDCardActivity, CameraActivity::class.java)
-            intent.putExtra(
-                CameraActivity.KEY_OUTPUT_FILE_PATH,
-                FileUtil.getSaveFile(application).absolutePath
-            )
-            intent.putExtra(CameraActivity.KEY_CONTENT_TYPE, CameraActivity.CONTENT_TYPE_ID_CARD_BACK)
-            startActivityForResult(intent, REQUEST_CODE_CAMERA)
-        }
 
         // 身份证反面扫描
         findViewById<View>(R.id.id_card_back_button_native).setOnClickListener {
@@ -256,6 +221,8 @@ class IDCardActivity : AppCompatActivity() {
         CameraNativeHelper.release()
         super.onDestroy()
     }
+
+
 
     companion object {
 

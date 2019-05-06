@@ -13,30 +13,6 @@
     <include layout="@layout/toolbar"/>
 
     <Button
-            android:text="相册选择 正面"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/gallery_button_front"
-            android:visibility="gone"
-            tools:ignore="HardcodedText"/>
-
-    <Button
-            android:text="相册选择 反面"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/gallery_button_back"
-            android:visibility="gone"
-            tools:ignore="HardcodedText"/>
-
-    <Button
-            android:text="身份证正面"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:id="@+id/id_card_front_button"
-            tools:ignore="HardcodedText"/>
-
-    <Button
         android:text="正面"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -46,14 +22,6 @@
         android:id="@+id/id_card_front_button_native"
         android:layout_weight="1"
         tools:ignore="HardcodedText"/>
-
-    <Button
-            android:text="身份证反面"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/id_card_back_button"
-            android:visibility="gone"
-            tools:ignore="HardcodedText"/>
 
     <Button
         android:text="反面"

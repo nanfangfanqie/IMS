@@ -82,8 +82,10 @@ class FinishRegisterActivity : BaseActivity() {
                                     SharePreferenceManager.setCachedFixProfileFlag(false)
                                     mDialog!!.dismiss()
                                     if (status == 0) {
-                                       val intent = Intent(this@FinishRegisterActivity,
-                                           MainActivity::class.java)
+                                        val intent = Intent(
+                                            this@FinishRegisterActivity,
+                                            IDVerifyActivity::class.java
+                                        )
                                         startActivity(intent)
                                         finish()
                                     }
